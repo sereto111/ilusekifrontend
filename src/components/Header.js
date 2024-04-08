@@ -9,7 +9,7 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import Divider from '@mui/material/Divider';
@@ -18,16 +18,8 @@ export function goInicio() {
   window.open("/", "_self");
 }
 
-export function goNews() {
-  window.open("/news", "_self");
-}
-
-function goWishlist() {
-  window.open("/wishlist", "_self");
-}
-
-function goCompleted() {
-  window.open("/completed", "_self");
+export function goSaved() {
+  window.open("/saved", "_self");
 }
 
 function goBuscador() {
@@ -133,7 +125,7 @@ export default function Header() {
       <AppBar position="static">
         <Container maxWidth="auto" sx={{ bgcolor: "#1a1a1a" }}>
           <Toolbar disableGutters>
-            <SportsEsportsIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <PhotoLibraryIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -149,7 +141,7 @@ export default function Header() {
                 textDecoration: 'none',
               }}
             >
-              GameSeki
+              IluSeki
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -199,24 +191,10 @@ export default function Header() {
                 </Button>
 
                 <Button
-                  onClick={goNews}
+                  onClick={goSaved}
                   sx={{ my: 2, color: 'black', display: 'block' }}
                 >
-                  NOTICIAS
-                </Button>
-
-                <Button
-                  onClick={goWishlist}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  LISTA DE DESEOS
-                </Button>
-
-                <Button
-                  onClick={goCompleted}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  COMPLETADOS
+                  GUARDADOS
                 </Button>
 
                 <Button
@@ -245,7 +223,7 @@ export default function Header() {
                 textDecoration: 'none',
               }}
             >
-              GameSeki
+              IluSeki
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
@@ -266,24 +244,10 @@ export default function Header() {
               </Button>
 
               <Button
-                onClick={goNews}
+                onClick={goSaved}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                NOTICIAS
-              </Button>
-
-              <Button
-                onClick={goWishlist}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                LISTA DE DESEOS
-              </Button>
-
-              <Button
-                onClick={goCompleted}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                COMPLETADOS
+                GUARDADOS
               </Button>
 
               <Button

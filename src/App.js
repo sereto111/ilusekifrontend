@@ -1,7 +1,7 @@
-/* import Header from './components/Header'; */
-import { Register } from './components/Register';
+import { Ruta } from './components/Ruta';
 import "./App.css";
 import { createContext, useState } from 'react';
+import Header from './components/Header';
 
 export const ThemeContext = createContext(null);
 
@@ -14,9 +14,11 @@ export function App() {
       <ThemeContext.Provider value={{theme, setTheme}}>
         
         <div className="App" id={theme}>
-          <Register/>
+          <Header/>
+
+          {/* <Register/> */}
           
-          {/* <Ruta/> */}
+          <Ruta/>
           
         </div>
         
