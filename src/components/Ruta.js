@@ -6,13 +6,13 @@ import { InitialWindowTest } from './InitialWindowTest';
 //import { News } from './News';
 //import { Wishlist } from './Wishlist';
 import { Register } from './Register';
-//import { Login } from './Login';
+import { Login } from './Login';
 //import { About } from './About';
 //import { AddGame } from './AddGame';
 //import { AddNews } from './AddNews';
 //import ResetPass from './ResetPass';
-//import { Profile } from './Profile';
-//import { MailPass } from './MailPass';
+import { Profile } from './Profile';
+import { MailPass } from './MailPass';
 //import { EditGame } from './EditGame';
 //import { EditNews } from './EditNews';
 //import { Completed } from './Completed';
@@ -25,19 +25,19 @@ export const Ruta = () => {
                 <Routes>
                     <Route exact path='/' element={<InitialWindowTest/>}></Route>
                     <Route exact path='/register' element={<Register/>}></Route>
-                    {/* <Route exact path="/login" component={Login}></Route>
-                  <Route exact path="/news" component={News}></Route>
+                    <Route exact path='/login' element={<Login/>}></Route>
+                  {/*<Route exact path="/news" component={News}></Route>
                   <Route exact path="/wishlist" component={Wishlist}></Route>
                   <Route exact path="/completed" component={Completed}></Route>
                   <Route exact path="/search" component={Buscador}></Route>
                   <Route exact path="/about" component={About}></Route>
                   <Route exact path="/addgame" component={AddGame}></Route>
-                  <Route exact path="/addnews" component={AddNews}></Route>
-                  <Route exact path="/profile" component={Profile}></Route>
-                  <Route exact path="/editgame/:nombre" component={EditGame}></Route>
-                  <Route exact path="/editnews/:titulo" component={EditNews}></Route>
-                  <Route exact path="/mail-pass" component={MailPass}></Route>
-                  <Route exact path="/reset-pass" component={ResetPass}></Route>*/}
+                  <Route exact path="/addnews" component={AddNews}></Route>*/}
+                  <Route exact path='/profile' element={<Profile/>}></Route>
+                  {/*<Route exact path="/editgame/:nombre" component={EditGame}></Route>
+                  <Route exact path="/editnews/:titulo" component={EditNews}></Route>*/}
+                  <Route exact path='/mail-pass' element={<MailPass/>}></Route>
+                  {/*<Route exact path='/reset-pass' element={<ResetPass/>}></Route>*/}
                   <Route exact path='/error' element={<Error/>}></Route> 
                   <Route path='*' element={<Error/>}/>
                 </Routes>

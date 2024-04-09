@@ -26,6 +26,7 @@ export function Profile() {
 
     const enviarCorreoRecuperacion = async () => {
         try {
+            //TODO: Cambiar ruta
             await axios.post('http://localhost:5000/api/correo/recuperar-pass', {
                 email: email
             });
@@ -44,7 +45,7 @@ export function Profile() {
                 <List>
 
                     <ListItem>
-                        <ListItemIcon sx={{ color: '#1976D2' }}>
+                        <ListItemIcon sx={{ color: '#c2185b' }}>
                             <AccountBoxTwoToneIcon />
                         </ListItemIcon>
                         <ListItemText
@@ -56,7 +57,7 @@ export function Profile() {
                         />
                     </ListItem>
                     <ListItem>
-                        <ListItemIcon sx={{ color: '#1976D2' }}>
+                        <ListItemIcon sx={{ color: '#c2185b' }}>
                             <EmailTwoToneIcon />
                         </ListItemIcon>
                         <ListItemText
@@ -68,14 +69,14 @@ export function Profile() {
                         />
                     </ListItem>
                     <ListItem>
-                        <ListItemIcon sx={{ color: '#1976D2' }}>
+                        <ListItemIcon sx={{ color: '#c2185b' }}>
                             <LockTwoToneIcon />
                         </ListItemIcon>
                         <ListItemText
                             primary={
                                 <React.Fragment>
                                     <strong>Contraseña: </strong>
-                                    <Link to="#" onClick={enviarCorreoRecuperacion} underline="hover">
+                                    <Link to="#" color="#c2185b" onClick={enviarCorreoRecuperacion} underline="hover">
                                         {'Cambiar contraseña'}
                                     </Link>
 

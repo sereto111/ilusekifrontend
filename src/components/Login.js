@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import { indigo } from '@mui/material/colors';
+import { pink } from '@mui/material/colors';
 import { goInicio } from './Header';
 
 export function Login() {
@@ -17,10 +17,10 @@ export function Login() {
   }
 
   const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(indigo[700]),
-    backgroundColor: indigo[700],
+    color: theme.palette.getContrastText(pink[700]),
+    backgroundColor: pink[700],
     '&:hover': {
-      backgroundColor: indigo[900],
+      backgroundColor: pink[900],
     },
   }));
 
@@ -43,7 +43,7 @@ export function Login() {
     const requestBody = JSON.stringify(logedUser);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/user/login', requestBody, {
+      const response = await axios.post('https://ilusekibackend.onrender.com/api/user/login', requestBody, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -65,8 +65,6 @@ export function Login() {
       setShowAlertError(false);
     }
   };
-
-
 
   return (
     <>
@@ -101,7 +99,7 @@ export function Login() {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
-          <Link to="#" onClick={goMailPass} underline="hover">
+          <Link to="#" onClick={goMailPass} color="#C2185B" underline="hover">
             <b>{'Recuperar contraseña'}</b>
           </Link>
           <ColorButton variant="contained" onClick={handleButtonClick}>Iniciar sesión</ColorButton>

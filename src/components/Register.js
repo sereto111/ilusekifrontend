@@ -6,16 +6,16 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import { indigo } from '@mui/material/colors';
+import { pink } from '@mui/material/colors';
 /* import { goInicio } from './Header'; */
 
 export function Register() {
 
   const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(indigo[700]),
-    backgroundColor: indigo[700],
+    color: theme.palette.getContrastText(pink[700]),
+    backgroundColor: pink[700],
     '&:hover': {
-      backgroundColor: indigo[900],
+      backgroundColor: pink[900],
     },
   }));
 
