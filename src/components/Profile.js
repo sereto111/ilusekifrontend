@@ -40,6 +40,7 @@ export function Profile() {
 
     return (
         <>
+            {/* TODO: Ver si hacer más ancho (menos separación a los lados) */}
             <h1>Perfil de {user}</h1>
             <Box display="flex" justifyContent="center">
                 <List sx={{ display: 'flex', flexDirection: 'row'}}>
