@@ -86,9 +86,17 @@ export function Login() {
           <TextField className='register'
             id="outlined-required"
             label="Email"
-            variant="filled"
+            variant="filled"           
             value={email}
             onChange={e => setEmail(e.target.value)}
+            sx={{              
+              '&:focus-within label': {
+                color: '#C2185B',
+              },
+              '& .MuiFilledInput-underline:after': {
+                borderBottomColor: '#C2185B',
+              },
+            }}
           />
           <TextField className='register'
             id="outlined-required"
@@ -98,6 +106,14 @@ export function Login() {
             autoComplete="current-password"
             value={password}
             onChange={e => setPassword(e.target.value)}
+            sx={{              
+              '&:focus-within label': {
+                color: '#C2185B',
+              },
+              '& .MuiFilledInput-underline:after': {
+                borderBottomColor: '#C2185B',
+              },
+            }}
           />
           <Link to="#" onClick={goMailPass} color="#C2185B" underline="hover">
             <b>{'Recuperar contraseña'}</b>

@@ -40,10 +40,9 @@ export function Profile() {
 
     return (
         <>
-            <h1>Perfil</h1>
+            <h1>Perfil de {user}</h1>
             <Box display="flex" justifyContent="center">
-                <List>
-
+                <List sx={{ display: 'flex', flexDirection: 'row'}}>
                     <ListItem>
                         <ListItemIcon sx={{ color: '#c2185b' }}>
                             <AccountBoxTwoToneIcon />
@@ -51,7 +50,9 @@ export function Profile() {
                         <ListItemText
                             primary={
                                 <React.Fragment>
-                                    <strong>Usuario:</strong> {user}
+                                    <strong>Usuario:</strong>
+                                    <br/>
+                                    {user}
                                 </React.Fragment>
                             }
                         />
@@ -63,7 +64,9 @@ export function Profile() {
                         <ListItemText
                             primary={
                                 <React.Fragment>
-                                    <strong>Email:</strong> {email}
+                                    <strong>Email:</strong>
+                                    <br/>
+                                    {email}
                                 </React.Fragment>
                             }
                         />
@@ -75,7 +78,8 @@ export function Profile() {
                         <ListItemText
                             primary={
                                 <React.Fragment>
-                                    <strong>Contraseña: </strong>
+                                    <strong>Contraseña:</strong>
+                                    <br/>
                                     <Link to="#" color="#c2185b" onClick={enviarCorreoRecuperacion} underline="hover">
                                         {'Cambiar contraseña'}
                                     </Link>
@@ -92,6 +96,7 @@ export function Profile() {
 
                 </List>
             </Box>
+            <h1>Ilustraciones de {user}</h1>
         </>
     )
 }

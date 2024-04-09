@@ -68,6 +68,14 @@ export function MailPass() {
                         variant="filled"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        sx={{              
+                            '&:focus-within label': {
+                              color: '#C2185B',
+                            },
+                            '& .MuiFilledInput-underline:after': {
+                              borderBottomColor: '#C2185B',
+                            },
+                          }}
                     />
 
                     <ColorButton variant="contained" onClick={enviarCorreoRecuperacion}>Recuperar contraseña</ColorButton>

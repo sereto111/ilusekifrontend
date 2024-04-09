@@ -92,6 +92,14 @@ export function Register() {
             variant="filled"
             value={nombre}
             onChange={e => setNombre(e.target.value)}
+            sx={{              
+              '&:focus-within label': {
+                color: '#C2185B',
+              },
+              '& .MuiFilledInput-underline:after': {
+                borderBottomColor: '#C2185B',
+              },
+            }}
           />
           <TextField className='register'
             required
@@ -100,6 +108,14 @@ export function Register() {
             variant="filled"
             value={email}
             onChange={e => setEmail(e.target.value)}
+            sx={{              
+              '&:focus-within label': {
+                color: '#C2185B',
+              },
+              '& .MuiFilledInput-underline:after': {
+                borderBottomColor: '#C2185B',
+              },
+            }}
           />
           <TextField className='register'
             required
@@ -110,6 +126,14 @@ export function Register() {
             autoComplete="current-password"
             value={password}
             onChange={e => setPassword(e.target.value)}
+            sx={{              
+              '&:focus-within label': {
+                color: '#C2185B',
+              },
+              '& .MuiFilledInput-underline:after': {
+                borderBottomColor: '#C2185B',
+              },
+            }}
           />
           <ColorButton variant="contained" onClick={handleButtonClick}>Registrar</ColorButton>
           <div className='center'>
