@@ -11,6 +11,7 @@ import { pink } from '@mui/material/colors';
 import { goInicio } from './Header';
 
 export function Login() {
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   function goMailPass() {
     window.open("/mail-pass", "_self");
@@ -43,7 +44,7 @@ export function Login() {
     const requestBody = JSON.stringify(logedUser);
 
     try {
-      const response = await axios.post('https://ilusekibackend.onrender.com/api/user/login', requestBody, {
+      const response = await axios.post(`${apiUrl}/api/user/login`, requestBody, {
         headers: {
           'Content-Type': 'application/json'
         }

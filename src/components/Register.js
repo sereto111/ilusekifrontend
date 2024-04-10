@@ -10,6 +10,7 @@ import { pink } from '@mui/material/colors';
 /* import { goInicio } from './Header'; */
 
 export function Register() {
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(pink[700]),
@@ -41,7 +42,7 @@ export function Register() {
     const requestBody = JSON.stringify(newUser);
 
     try {
-      await axios.post('https://ilusekibackend.onrender.com/api/user/registro', requestBody, {
+      await axios.post(`${apiUrl}/api/user/registro`, requestBody, {
         headers: {
           'Content-Type': 'application/json'
         }
