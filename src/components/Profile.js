@@ -57,7 +57,7 @@ export function Profile() {
         };
 
         fetchIlustraciones();
-    }, []);
+    }, [apiUrl, user]);
 
     //Abrir y cerrar modal
     const handleOpenModal = (ilustracion) => {
