@@ -30,7 +30,7 @@ export function MailPass() {
 
     const enviarCorreoRecuperacion = async () => {
         try {
-            //TODO: Cambiar ruta
+            //TODO: Cambiar ruta | Hacer en backend
             await axios.post('http://localhost:5000/api/correo/recuperar-pass', {
                 email: email
             });
