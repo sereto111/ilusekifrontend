@@ -24,18 +24,6 @@ export function AddIllustration() {
         },
     }));
 
-    const StyledRating = styled(Rating)({
-        '& .MuiRating-icon': {
-            color: '#bbdff8',
-        },
-        '& .MuiRating-iconFilled': {
-            color: '#4cb6ff',
-        },
-        '& .MuiRating-iconHover': {
-            color: '#28a7fe',
-        },
-    });
-
     /* const webcamRef = useRef(Webcam); */
     const [nombre, setNombre] = useState('');
     const [descripcion, setDescripcion] = useState('');
