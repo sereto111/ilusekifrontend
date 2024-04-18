@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
 import { goInicio } from './Header';
-import Rating from '@mui/material/Rating';
 import Alert from '@mui/material/Alert';
 /* import Webcam from 'react-webcam'; */
 
