@@ -8,11 +8,12 @@ import { InitialWindowTest } from './InitialWindowTest';
 import { Register } from './Register';
 import { Login } from './Login';
 //import { About } from './About';
-//import { AddGame } from './AddGame';
+//import { AddIllustration } from './AddIllustration';
 //import { AddNews } from './AddNews';
 //import ResetPass from './ResetPass';
 import { Profile } from './Profile';
 import { MailPass } from './MailPass';
+import { AddIllustration } from './AddIllustration';
 //import { EditGame } from './EditGame';
 //import { EditNews } from './EditNews';
 //import { Completed } from './Completed';
@@ -30,9 +31,9 @@ export const Ruta = () => {
                   <Route exact path="/wishlist" component={Wishlist}></Route>
                   <Route exact path="/completed" component={Completed}></Route>
                   <Route exact path="/search" component={Buscador}></Route>
-                  <Route exact path="/about" component={About}></Route>
-                  <Route exact path="/addgame" component={AddGame}></Route>
-                  <Route exact path="/addnews" component={AddNews}></Route>*/}
+                  <Route exact path="/about" component={About}></Route>*/}
+                  <Route exact path='/upload' element={<AddIllustration/>}></Route>
+                  {/*<Route exact path="/addnews" component={AddNews}></Route>*/}
                   <Route exact path='/profile' element={<Profile/>}></Route>
                   {/*<Route exact path="/editgame/:nombre" component={EditGame}></Route>
                   <Route exact path="/editnews/:titulo" component={EditNews}></Route>*/}

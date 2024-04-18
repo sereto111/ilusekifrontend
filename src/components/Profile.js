@@ -13,6 +13,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { goInicio } from './Header';
 
+//TODO: Poner botón para ir a ruta upload | En Profile o Inicio
+
 export function Profile() {
     const apiUrl = process.env.REACT_APP_API_URL;
 
