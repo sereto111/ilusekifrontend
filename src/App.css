@@ -43,6 +43,10 @@
 #dark .custom-textfield .MuiInputLabel-root {
   color: #d8d8d8;
 }
+
+#dark .custom-textfield .MuiInputBase-input {
+  color: #fff;
+}
 /* END Label de TextField Buscador */
 
 .center{

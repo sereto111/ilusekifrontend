@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useCallback } from 'react';
 import axios from 'axios';
 import { TextField, Autocomplete } from '@mui/material';
 import "../App.css";
@@ -13,7 +14,8 @@ export function Buscador() {
     const [modalData, setModalData] = useState(null);
 
     // Función para obtener las ilustraciones y los usuarios
-    const fetchIlustraciones = async () => {
+    //callback para que la función se mantenga constante entre renders (a menos que cambie apiUrl)
+    const fetchIlustraciones = useCallback(async () => {
         try {
             const response = await axios.get(`${apiUrl}/api/ilustration/listarIlustraciones`);
             const ilustracionesData = response.data.ilustraciones;
@@ -27,7 +29,7 @@ export function Buscador() {
         } catch (error) {
             console.error('Error al obtener las ilustraciones:', error);
         }
-    };
+    }, [apiUrl]);
 
     // Realizar la petición para obtener las ilustraciones al iniciar el componente
     useEffect(() => {
