@@ -32,7 +32,7 @@ export function Buscador() {
     // Realizar la petición para obtener las ilustraciones al iniciar el componente
     useEffect(() => {
         fetchIlustraciones();
-    }, [apiUrl]);
+    }, [apiUrl, fetchIlustraciones]);
 
     // Filtrar ilustraciones por usuario seleccionado
     const filteredIlustraciones = ilustraciones.filter(
