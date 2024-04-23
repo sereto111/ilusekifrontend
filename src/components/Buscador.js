@@ -87,7 +87,7 @@ export function Buscador() {
                     />
                 )}
                 // Cambiar el mensaje por defecto para cuando no se encuentran opciones
-                noOptionsText="No se encontró ese usuario"
+                noOptionsText="No se encontró este usuario"
             />
 
             {/* Lista de ilustraciones filtradas */}
