@@ -17,7 +17,7 @@ import { AddIllustration } from './AddIllustration';
 //import { EditGame } from './EditGame';
 //import { EditNews } from './EditNews';
 //import { Completed } from './Completed';
-//import Buscador from './Buscador';
+import { Buscador } from './Buscador';
 
 export const Ruta = () => {
     return (
@@ -29,9 +29,9 @@ export const Ruta = () => {
                     <Route exact path='/login' element={<Login/>}></Route>
                   {/*<Route exact path="/news" component={News}></Route>
                   <Route exact path="/wishlist" component={Wishlist}></Route>
-                  <Route exact path="/completed" component={Completed}></Route>
-                  <Route exact path="/search" component={Buscador}></Route>
-                  <Route exact path="/about" component={About}></Route>*/}
+                  <Route exact path="/completed" component={Completed}></Route>*/}
+                    <Route exact path='/search' element={<Buscador/>}></Route>
+                  {/*<Route exact path="/about" component={About}></Route>*/}
                   <Route exact path='/upload' element={<AddIllustration/>}></Route>
                   {/*<Route exact path="/addnews" component={AddNews}></Route>*/}
                   <Route exact path='/profile' element={<Profile/>}></Route>

@@ -32,12 +32,18 @@
 }
 
 #dark .register{
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 #light .newsContainer{
   background-color: #d8d8d8;
 }
+
+/* START Label de TextField Buscador */
+#dark .custom-textfield .MuiInputLabel-root {
+  color: #d8d8d8;
+}
+/* END Label de TextField Buscador */
 
 .center{
   display: flex;
