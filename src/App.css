@@ -8,7 +8,7 @@
 }
 
 .App-header {
-  background-color: #000000;
+  background-color: #000;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,12 +19,12 @@
 }
 
 #light {
-  background-color: #FFFFFF;
+  background-color: #FFF;
 }
 
 #dark {
   background-color: #3f3f3f;
-  color: #FFFFFF;
+  color: #FFF;
 }
 
 #light .register{
@@ -32,7 +32,7 @@
 }
 
 #dark .register{
-  background-color: #fff;
+  background-color: #FFF;
 }
 
 #light .newsContainer{
@@ -45,7 +45,15 @@
 }
 
 #dark .custom-textfield .MuiInputBase-input {
-  color: #fff;
+  color: #FFF;
+}
+
+#light .custom-textfield .MuiInputLabel-root {
+  color: #3f3f3f;
+}
+
+#light .custom-textfield .MuiInputBase-input {
+  color: #000;
 }
 /* END Label de TextField Buscador */
 
