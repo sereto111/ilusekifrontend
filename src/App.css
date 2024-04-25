@@ -199,12 +199,13 @@
   text-align: center;
 }
 
+/* TODO: Ajustar margen en media queries */
 .home-grid-item {
   position: relative;
   border: 1px solid #ccc;
   width: 700px;
   height: 700px;
-  margin-left: 23%;
+  margin-left: 25%;
   overflow: hidden;
   text-align: center;
 }
