@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -22,7 +22,7 @@ export function InitialWindow() {
   };
 
   // Función para obtener todas las ilustraciones de la API
-  const obtenerIlustraciones = async () => {
+  const obtenerIlustraciones = useCallback(async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/ilustration/listarIlustraciones`);
       if (response.data.ok) {
@@ -33,12 +33,12 @@ export function InitialWindow() {
     } catch (error) {
       console.error('Error al obtener las ilustraciones:', error);
     }
-  };
+  }, [apiUrl, mezclarArray]);
 
   // Llama a la función obtenerIlustraciones cuando se monta el componente
   useEffect(() => {
     obtenerIlustraciones();
-  }, [apiUrl]);
+  }, []);
 
   //Abrir y cerrar modal
   const handleOpenModal = (ilustracion) => {

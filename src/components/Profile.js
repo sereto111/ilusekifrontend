@@ -36,7 +36,7 @@ export function Profile() {
     const email = localStorage.getItem('email');
 
     // Inicializa el estado con el usuario del parámetro o con un valor por defecto
-    const [user, setUser] = useState(usuarioParam || userLocalStorage);
+    const [user] = useState(usuarioParam || userLocalStorage);
 
     const enviarCorreoRecuperacion = async () => {
         try {
@@ -106,7 +106,7 @@ export function Profile() {
                         />
                     </ListItem>
 
-                    {userLocalStorage == user && (
+                    {userLocalStorage === user && (
                         <>
                             <ListItem>
                                 <ListItemIcon sx={{ color: '#c2185b' }}>
