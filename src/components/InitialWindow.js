@@ -33,12 +33,12 @@ export function InitialWindow() {
     } catch (error) {
       console.error('Error al obtener las ilustraciones:', error);
     }
-  }, [apiUrl, mezclarArray]);
+  }, [apiUrl]);
 
   // Llama a la función obtenerIlustraciones cuando se monta el componente
   useEffect(() => {
     obtenerIlustraciones();
-  }, []);
+  }, [obtenerIlustraciones]);
 
   //Abrir y cerrar modal
   const handleOpenModal = (ilustracion) => {
