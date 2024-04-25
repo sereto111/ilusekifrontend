@@ -27,15 +27,15 @@
   color: #FFF;
 }
 
-#light .register{
+#light .register {
   background-color: #d8d8d8;
 }
 
-#dark .register{
+#dark .register {
   background-color: #FFF;
 }
 
-#light .newsContainer{
+#light .newsContainer {
   background-color: #d8d8d8;
 }
 
@@ -55,22 +55,23 @@
 #light .custom-textfield .MuiInputBase-input {
   color: #000;
 }
+
 /* END Label de TextField Buscador */
 
-.center{
+.center {
   display: flex;
   align-items: center;
   margin: 0 auto;
 }
 
-.items{
+.items {
   display: flex;
   padding: 10px;
   align-items: center;
   margin: 0 auto;
 }
 
-.item {    
+.item {
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
@@ -130,7 +131,26 @@
 
 /* ----------------------------- */
 
-/* START Profile styles */
+.bold {
+  font-weight: 700;
+}
+
+.big {
+  font-size: xx-large;
+}
+
+.custom-link,
+.custom-link:focus,
+.custom-link:visited {
+  color: #c2185b;
+  text-decoration: none;
+}
+
+.custom-link:hover {
+  color: #c2185b;
+}
+
+/* START Profile styles | Usados en Profile, Buscador, InitialWindow */
 .profile-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -142,18 +162,32 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 40px;
   overflow: auto;
-  padding-bottom: 20px; /* Separación de la barra de scroll */
+  padding-bottom: 20px;
+  /* Separación de la barra de scroll */
+}
+
+.home-grid-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 40px;
+  overflow: auto;
+  padding-bottom: 20px;
+  /* Separación de la barra de scroll */
 }
 
 /* START Profile barra scroll imágenes */
-.profile-grid-container::-webkit-scrollbar {  
-  height: 12px; /* Altura de la barra de desplazamiento */
+.profile-grid-container::-webkit-scrollbar,
+.home-grid-container::-webkit-scrollbar {
+  height: 12px;
+  /* Altura de la barra de desplazamiento */
 }
 
-.profile-grid-container::-webkit-scrollbar-thumb {
+.profile-grid-container::-webkit-scrollbar-thumb,
+.home-grid-container::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
 }
+
 /* END Profile barra scroll imágenes */
 
 .profile-grid-item {
@@ -161,11 +195,22 @@
   border: 1px solid #ccc;
   width: 400px;
   height: 400px;
-  overflow: hidden;  
+  overflow: hidden;
   text-align: center;
 }
 
-.profile-grid-item p {
+.home-grid-item {
+  position: relative;
+  border: 1px solid #ccc;
+  width: 700px;
+  height: 700px;
+  margin-left: 23%;
+  overflow: hidden;
+  text-align: center;
+}
+
+.profile-grid-item p,
+.home-grid-item p {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -177,17 +222,20 @@
   box-sizing: border-box;
 }
 
-.profile-grid-item img {
+.profile-grid-item img,
+.home-grid-item img {
   max-width: 100%;
-  height: 100%;  
+  height: 100%;
   object-fit: cover;
 }
 
 /* TODO: Ver si cambiar estilos modal*/
 /* START Profile Modal Images */
-.modal {  
-  position: fixed; /* Se mantiene fijo en la ventana */
-  z-index: 1; /* Por encima de todo */
+.modal {
+  position: fixed;
+  /* Se mantiene fijo en la ventana */
+  z-index: 1;
+  /* Por encima de todo */
   left: 0;
   top: 0;
   width: 100%;
@@ -197,7 +245,7 @@
 }
 
 /* Contenido del modal */
-.modal-content {  
+.modal-content {
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
@@ -232,13 +280,15 @@
   text-decoration: none;
   cursor: pointer;
 }
+
 /* END Profile Modal Images */
 /* END Profile styles */
 
 @media screen and (min-width: 1200px) {
   .result-item {
-    width: calc(25% - 10px); /* Ajusta el ancho deseado para pantallas grandes */
-  }  
+    width: calc(25% - 10px);
+    /* Ajusta el ancho deseado para pantallas grandes */
+  }
 }
 
 /* Media para imágenes Profile */
@@ -252,12 +302,20 @@
   .result-item {
     width: 100%;
   }
+
   .profile-grid-container {
     grid-template-columns: repeat(1, 1fr);
   }
+
   .profile-grid-item {
     width: 665px;
     height: 665px;
+  }
+
+  .home-grid-item {
+    width: 300px;
+    height: 300px;
+    margin-left: 0 auto;
   }
 }
 

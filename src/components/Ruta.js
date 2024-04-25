@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Error } from './Error';
 //import { InitialWindow } from './InitialWindow';
-import { InitialWindowTest } from './InitialWindowTest';
+import { InitialWindow } from './InitialWindow';
 //import { News } from './News';
 //import { Wishlist } from './Wishlist';
 import { Register } from './Register';
@@ -24,7 +24,7 @@ export const Ruta = () => {
         <BrowserRouter>
             <div className="routes">
                 <Routes>
-                    <Route exact path='/' element={<InitialWindowTest/>}></Route>
+                    <Route exact path='/' element={<InitialWindow/>}></Route>
                     <Route exact path='/register' element={<Register/>}></Route>
                     <Route exact path='/login' element={<Login/>}></Route>
                   {/*<Route exact path="/news" component={News}></Route>

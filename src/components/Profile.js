@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -22,12 +23,20 @@ export function Profile() {
         return new Promise((resolve) => setTimeout(resolve, ms));
     };
 
+    // Obtiene el parámetro de búsqueda de la URL
+    const location = useLocation();
+    const query = new URLSearchParams(location.search);
+    const usuarioParam = query.get('usuario');
+
     const [showAlertSuccess, setShowAlertSuccess] = useState(false);
     const [ilustraciones, setIlustraciones] = useState([]);
     const [modalData, setModalData] = useState(null);
 
-    const user = localStorage.getItem('user');
+    const userLocalStorage = localStorage.getItem('user');
     const email = localStorage.getItem('email');
+
+    // Inicializa el estado con el usuario del parámetro o con un valor por defecto
+    const [user, setUser] = useState(usuarioParam || userLocalStorage);
 
     const enviarCorreoRecuperacion = async () => {
         try {
@@ -96,37 +105,45 @@ export function Profile() {
                             }
                         />
                     </ListItem>
-                    <ListItem>
-                        <ListItemIcon sx={{ color: '#c2185b' }}>
-                            <EmailTwoToneIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary={
-                                <React.Fragment>
-                                    <strong>Email:</strong>
-                                    <br />
-                                    {email}
-                                </React.Fragment>
-                            }
-                        />
-                    </ListItem>
-                    <ListItem>
-                        <ListItemIcon sx={{ color: '#c2185b' }}>
-                            <LockTwoToneIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary={
-                                <React.Fragment>
-                                    <strong>Contraseña:</strong>
-                                    <br />
-                                    <Link to="#" color="#c2185b" onClick={enviarCorreoRecuperacion} underline="hover">
-                                        {'Cambiar contraseña'}
-                                    </Link>
 
-                                </React.Fragment>
-                            }
-                        />
-                    </ListItem>
+                    {userLocalStorage == user && (
+                        <>
+                            <ListItem>
+                                <ListItemIcon sx={{ color: '#c2185b' }}>
+                                    <EmailTwoToneIcon />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={
+                                        <React.Fragment>
+                                            <strong>Email:</strong>
+                                            <br />
+                                            {email}
+                                        </React.Fragment>
+                                    }
+                                />
+                            </ListItem>
+
+                            {/* TODO: Configurar backend para correo de Cambiar contraseña */}
+                            <ListItem>
+                                <ListItemIcon sx={{ color: '#c2185b' }}>
+                                    <LockTwoToneIcon />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={
+                                        <React.Fragment>
+                                            <strong>Contraseña:</strong>
+                                            <br />
+                                            <Link to="#" color="#c2185b" onClick={enviarCorreoRecuperacion} underline="hover">
+                                                {'Cambiar contraseña'}
+                                            </Link>
+
+                                        </React.Fragment>
+                                    }
+                                />
+                            </ListItem>
+                        </>
+                    )}
+
                     {showAlertSuccess && (
                         <Stack sx={{ width: '100%' }} spacing={2}>
                             <Alert severity="success">Revise su correo para cambiar la contraseña</Alert>
@@ -145,7 +162,7 @@ export function Profile() {
                             <p>{ilustracion.descripcion}</p>
                         </div>
                     ))}
-                </div>                
+                </div>
                 {modalData && (
                     <div className="modal" onClick={handleCloseModalClickOutside}>
                         <div className="modal-content">
