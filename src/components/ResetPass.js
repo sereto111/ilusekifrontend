@@ -5,16 +5,17 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import { indigo } from '@mui/material/colors';
+import { pink } from '@mui/material/colors';
 import axios from 'axios';
 
-const ResetPass = () => {
+const ResetPass = () => {ç
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(indigo[700]),
-    backgroundColor: indigo[700],
+    color: theme.palette.getContrastText(pink[700]),
+    backgroundColor: pink[700],
     '&:hover': {
-      backgroundColor: indigo[900],
+      backgroundColor: pink[900],
     },
   }));
 
@@ -34,7 +35,7 @@ const ResetPass = () => {
     const token = urlParams.get('token');
 
     try {
-      await axios.post(`http://localhost:5000/api/pass/reset-password/${token}`, {
+      await axios.post(`${apiUrl}/api/pass/reset-password/${token}`, {
         password: password
       });
       setShowAlertSuccess(true);
@@ -68,7 +69,7 @@ const ResetPass = () => {
             <div className='center'>
               {showAlertSuccess && (
                 <Stack sx={{ width: '100%' }} spacing={2}>
-                  <Alert severity="success">Contraseña cambiada con exito</Alert>
+                  <Alert severity="success">Contraseña cambiada con éxito | Puede cerrar esta pestaña o iniciar sesión con su nueva contraseña</Alert>
                 </Stack>
               )}
             </div>
@@ -76,7 +77,7 @@ const ResetPass = () => {
             <div className='center'>
               {showAlertError && (
                 <Stack sx={{ width: '100%' }} spacing={2}>
-                  <Alert severity="error">Error al cambiar la contraseña</Alert>
+                  <Alert severity="error">El enlace a caducado o ya se ha cambiado la contraseña</Alert>
                 </Stack>
               )}
             </div>

@@ -10,7 +10,7 @@ import { Login } from './Login';
 //import { About } from './About';
 //import { AddIllustration } from './AddIllustration';
 //import { AddNews } from './AddNews';
-//import ResetPass from './ResetPass';
+import ResetPass from './ResetPass';
 import { Profile } from './Profile';
 import { MailPass } from './MailPass';
 import { AddIllustration } from './AddIllustration';
@@ -38,7 +38,7 @@ export const Ruta = () => {
                   {/*<Route exact path="/editgame/:nombre" component={EditGame}></Route>
                   <Route exact path="/editnews/:titulo" component={EditNews}></Route>*/}
                   <Route exact path='/mail-pass' element={<MailPass/>}></Route>
-                  {/*<Route exact path='/reset-pass' element={<ResetPass/>}></Route>*/}
+                  <Route exact path='/reset-pass' element={<ResetPass/>}></Route>
                   <Route exact path='/error' element={<Error/>}></Route> 
                   <Route path='*' element={<Error/>}/>
                 </Routes>
