@@ -8,9 +8,7 @@ import { styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
 import axios from 'axios';
 
-const ResetPass = () => {ç
-  const apiUrl = process.env.REACT_APP_API_URL;
-
+const ResetPass = () => {  
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(pink[700]),
     backgroundColor: pink[700],
@@ -35,7 +33,7 @@ const ResetPass = () => {ç
     const token = urlParams.get('token');
 
     try {
-      await axios.post(`${apiUrl}/api/pass/reset-password/${token}`, {
+      await axios.post(`https://iluseki.netlify.app/api/pass/reset-password/${token}`, {
         password: password
       });
       setShowAlertSuccess(true);

@@ -10,6 +10,7 @@ import axios from 'axios';
 import { goInicio } from './Header';
 
 export function MailPass() {
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const ColorButton = styled(Button)(({ theme }) => ({
         color: theme.palette.getContrastText(pink[700]),
@@ -29,9 +30,8 @@ export function MailPass() {
     const [email, setEmail] = useState('');
 
     const enviarCorreoRecuperacion = async () => {
-        try {
-            //TODO: Cambiar ruta | Hacer en backend
-            await axios.post('http://localhost:5000/api/correo/recuperar-pass', {
+        try {           
+            await axios.post(`${apiUrl}/api/correo/recuperar-pass`, {
                 email: email
             });
 
