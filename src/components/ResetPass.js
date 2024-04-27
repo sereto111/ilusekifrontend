@@ -69,7 +69,7 @@ const ResetPass = () => {
             <div className='center'>
               {showAlertSuccess && (
                 <Stack sx={{ width: '100%' }} spacing={2}>
-                  <Alert severity="success">Contraseña cambiada con éxito | Puede cerrar esta pestaña o iniciar sesión con su nueva contraseña</Alert>
+                  <Alert severity="success">Contraseña cambiada con éxito | Puede cerrar esta pestaña</Alert>
                 </Stack>
               )}
             </div>
