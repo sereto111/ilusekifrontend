@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
 import axios from 'axios';
 
-const ResetPass = () => {ç
+const ResetPass = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const ColorButton = styled(Button)(({ theme }) => ({
