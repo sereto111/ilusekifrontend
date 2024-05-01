@@ -166,24 +166,22 @@
   /* Separación de la barra de scroll */
 }
 
-.home-grid-container {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 40px;
-  overflow: auto;
-  padding-bottom: 20px;
-  /* Separación de la barra de scroll */
+.home-container ul {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;  /* Organización vertical de elementos */
+  list-style: none;  /* Quita la decoración de lista */
+  padding: 0;
+  margin: 0;
 }
 
 /* START Profile barra scroll imágenes */
-.profile-grid-container::-webkit-scrollbar,
-.home-grid-container::-webkit-scrollbar {
+.profile-grid-container::-webkit-scrollbar {
   height: 12px;
   /* Altura de la barra de desplazamiento */
 }
 
-.profile-grid-container::-webkit-scrollbar-thumb,
-.home-grid-container::-webkit-scrollbar-thumb {
+.profile-grid-container::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
 }
@@ -199,19 +197,25 @@
   text-align: center;
 }
 
-/* TODO: Ajustar margen en media queries */
-.home-grid-item {
-  position: relative;
-  border: 1px solid #ccc;
-  width: 700px;
-  height: 700px;
-  margin-left: 25%;
-  overflow: hidden;
-  text-align: center;
+#dark .div-border {
+  border-bottom: 1px dashed #CCC;
+  padding: 10px;
 }
 
-.profile-grid-item p,
-.home-grid-item p {
+#light .div-border {
+  border-bottom: 1px dashed #3F3F3F;
+  padding: 10px;
+}
+
+.home-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.profile-grid-item p {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -223,11 +227,19 @@
   box-sizing: border-box;
 }
 
-.profile-grid-item img,
-.home-grid-item img {
+.profile-grid-item img {
   max-width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.home-item img {
+  max-width: 50%;
+  height: auto;
+}
+
+.custom-link {
+  cursor: pointer;
 }
 
 /* TODO: Ver si cambiar estilos modal*/
@@ -293,9 +305,14 @@
 }
 
 /* Media para imágenes Profile */
-@media (max-width: 1100px) {
+@media screen and (max-width: 1100px) {
   .profile-grid-container {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .home-item img {
+    max-width: 70%;
+    height: auto;
   }
 }
 
@@ -313,15 +330,19 @@
     height: 665px;
   }
 
-  .home-grid-item {
-    width: 300px;
-    height: 300px;
-    margin-left: 0 auto;
+  .home-item img {
+    max-width: 80%;
+    height: auto;
   }
 }
 
 @media (max-width: 600px) {
   .onlyBigScreen {
     display: none;
+  }
+
+  .home-item img {
+    max-width: 90%;
+    height: auto;
   }
 }

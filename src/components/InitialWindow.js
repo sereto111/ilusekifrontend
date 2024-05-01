@@ -60,14 +60,17 @@ export function InitialWindow() {
     /* TODO: Mirar si cambiar CSS para centrarlos o posicionarlos mejor */
     <div className="profile-container">
       <h1>Descubre ilustradores</h1>
-      <div className="home-grid-container">
-        {ilustracionesMezcladas.map((ilustracion) => (
-          <div key={ilustracion._id} className="home-grid-item" onClick={() => handleOpenModal(ilustracion)}>
-            <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
-            {/* <p>{ilustracion.descripcion}</p> */}
-            <p><span className='bold'>Autor: </span>{ilustracion.usuario}</p>
-          </div>
-        ))}
+      <div className="home-container">
+        <ul>
+          {ilustracionesMezcladas.map((ilustracion) => (
+            <li key={ilustracion._id} className="home-item" onClick={() => handleOpenModal(ilustracion)}>
+              <div className='div-border'>
+                <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
+                <p><span className='bold'>Autor: </span>{ilustracion.usuario}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
       {modalData && (
         <div className="modal" onClick={handleCloseModalClickOutside}>

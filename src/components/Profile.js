@@ -41,7 +41,7 @@ export function Profile() {
     const enviarCorreoRecuperacion = async () => {
         try {
             //TODO: Cambiar ruta | Hacer en backend
-            await axios.post('http://localhost:5000/api/correo/recuperar-pass', {
+            await axios.post('https://ilusekibackend.onrender.com/api/correo/recuperar-pass', {
                 email: email
             });
 
@@ -87,92 +87,107 @@ export function Profile() {
 
     return (
         <>
-            {/* TODO: Ver si hacer más ancho (menos separación a los lados) */}
-            <h1>Perfil de {user}</h1>
-            <Box display="flex" justifyContent="center">
-                <List sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <ListItem>
-                        <ListItemIcon sx={{ color: '#c2185b' }}>
-                            <AccountBoxTwoToneIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary={
-                                <React.Fragment>
-                                    <strong>Usuario:</strong>
-                                    <br />
-                                    {user}
-                                </React.Fragment>
-                            }
-                        />
-                    </ListItem>
-
-                    {userLocalStorage === user && (
-                        <>
+            {/* Comprobar si hay usuario logueado */}
+            {user ? (
+                <>
+                    {/* TODO: Ver si hacer más ancho (menos separación a los lados) */}
+                    <h1>Perfil de {user}</h1>
+                    <Box display="flex" justifyContent="center">
+                        <List sx={{ display: 'flex', flexDirection: 'row' }}>
                             <ListItem>
                                 <ListItemIcon sx={{ color: '#c2185b' }}>
-                                    <EmailTwoToneIcon />
+                                    <AccountBoxTwoToneIcon />
                                 </ListItemIcon>
                                 <ListItemText
                                     primary={
                                         <React.Fragment>
-                                            <strong>Email:</strong>
+                                            <strong>Usuario:</strong>
                                             <br />
-                                            {email}
+                                            {user}
                                         </React.Fragment>
                                     }
                                 />
                             </ListItem>
 
-                            {/* TODO: Configurar backend para correo de Cambiar contraseña */}
-                            <ListItem>
-                                <ListItemIcon sx={{ color: '#c2185b' }}>
-                                    <LockTwoToneIcon />
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={
-                                        <React.Fragment>
-                                            <strong>Contraseña:</strong>
-                                            <br />
-                                            <Link to="#" color="#c2185b" onClick={enviarCorreoRecuperacion} underline="hover">
-                                                {'Cambiar contraseña'}
-                                            </Link>
+                            {userLocalStorage === user && (
+                                <>
+                                    <ListItem>
+                                        <ListItemIcon sx={{ color: '#c2185b' }}>
+                                            <EmailTwoToneIcon />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={
+                                                <React.Fragment>
+                                                    <strong>Email:</strong>
+                                                    <br />
+                                                    {email}
+                                                </React.Fragment>
+                                            }
+                                        />
+                                    </ListItem>
 
-                                        </React.Fragment>
-                                    }
-                                />
-                            </ListItem>
-                        </>
-                    )}
+                                    {/* TODO: Configurar backend para correo de Cambiar contraseña */}
+                                    <ListItem>
+                                        <ListItemIcon sx={{ color: '#c2185b' }}>
+                                            <LockTwoToneIcon />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={
+                                                <React.Fragment>
+                                                    <strong>Contraseña:</strong>
+                                                    <br />
+                                                    <Link to="#" color="#c2185b" onClick={enviarCorreoRecuperacion} underline="hover"
+                                                    className='custom-link'>
+                                                        {'Cambiar contraseña'}
+                                                    
+                                                    </Link>
 
-                    {showAlertSuccess && (
-                        <Stack sx={{ width: '100%' }} spacing={2}>
-                            <Alert severity="success">Revise su correo para cambiar la contraseña</Alert>
-                        </Stack>
-                    )}
+                                                </React.Fragment>
+                                            }
+                                        />
+                                    </ListItem>
+                                </>
+                            )}
 
-                </List>
-            </Box>
-            {/* TODO: Añadir botón me gusta y guardados */}
-            <div className="profile-container">
-                <h1>Ilustraciones de {user}</h1>
-                <div className="profile-grid-container">
-                    {ilustraciones.map((ilustracion) => (
-                        <div key={ilustracion._id} className="profile-grid-item" onClick={() => handleOpenModal(ilustracion)}>
-                            <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
-                            <p>{ilustracion.descripcion}</p>
+                            {showAlertSuccess && (
+                                <Stack sx={{ width: '100%' }} spacing={2}>
+                                    <Alert severity="success">Revise su correo para cambiar la contraseña</Alert>
+                                </Stack>
+                            )}
+
+                        </List>
+                    </Box>
+                    {/* TODO: Añadir botón me gusta y guardados */}
+                    <div className="profile-container">
+                        <h1>Ilustraciones de {user}</h1>
+                        <div className="profile-grid-container">
+                            {ilustraciones.map((ilustracion) => (
+                                <div key={ilustracion._id} className="profile-grid-item" onClick={() => handleOpenModal(ilustracion)}>
+                                    <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
+                                    <p>{ilustracion.descripcion}</p>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-                {modalData && (
-                    <div className="modal" onClick={handleCloseModalClickOutside}>
-                        <div className="modal-content">
-                            <span className="close" onClick={handleCloseModal}>&times;</span>
-                            <img src={modalData.imagen.secure_url} alt={modalData.nombre} />
-                            <p>{modalData.descripcion}</p>
-                        </div>
+                        {modalData && (
+                            <div className="modal" onClick={handleCloseModalClickOutside}>
+                                <div className="modal-content">
+                                    <span className="close" onClick={handleCloseModal}>&times;</span>
+                                    <img src={modalData.imagen.secure_url} alt={modalData.nombre} />
+                                    <p>{modalData.descripcion}</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
+
+                </>
+            ) : (
+                <>
+                    <section id="content">
+                        <h2>Sesión no iniciada</h2>
+                        <p>Debes iniciar sesión para poder acceder a tu perfil</p>
+                    </section>
+                </>
+            )}
         </>
-    )
+    );
 }
