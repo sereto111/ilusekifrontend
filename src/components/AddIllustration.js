@@ -24,7 +24,6 @@ export function AddIllustration() {
     }));
 
     /* const webcamRef = useRef(Webcam); */
-    const [nombre, setNombre] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [imagen, setImagen] = useState(null);
     const [imagenPreview, setImagenPreview] = useState(null);
@@ -97,14 +96,13 @@ export function AddIllustration() {
     };*/
 
     const handleButtonClick = async () => {
-        const formData = new FormData();
-        formData.append('nombre', nombre);
+        const formData = new FormData();        
         formData.append('descripcion', descripcion);
         formData.append('imagen', imagen); // Añade la imagen al objeto FormData
         formData.append('usuario', usuario); //Subido por:
 
 
-        if (!imagen || !nombre || !descripcion) {
+        if (!imagen || !descripcion) {
             // Si falta alguno de los campos obligatorios, muestra un mensaje de error
             setShowAlertToast(true);
             setTimeout(() => {
@@ -151,16 +149,7 @@ export function AddIllustration() {
                     autoComplete="off"
                     style={{ minHeight: '100vh' }}
                 >
-
-                    {/* TODO: Quitar nombre | Eliminar del backend o poner aleatorio */}
-                    <TextField className='register'
-                        required
-                        id="outlined-required"
-                        label="Nombre"
-                        variant="filled"
-                        value={nombre}
-                        onChange={e => setNombre(e.target.value)}
-                    />
+                    
                     {/* TODO: Quitar que sea obligatoria en el backend y poner una descripción por defecto en caso de vacía */}
                     <TextField className='register'
                         required
