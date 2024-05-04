@@ -20,7 +20,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { pink, red } from '@mui/material/colors';
+import { pink, red, green, grey } from '@mui/material/colors';
 import { goInicio } from './Header';
 
 //TODO: Poner botón para ir a ruta upload | En Profile o Inicio
@@ -268,10 +268,26 @@ export function Profile() {
                             </DialogContent>
                             <DialogActions className='dialog'>
                                 {/* TODO: Ver si cambiar colores a los botones */}
-                                <Button onClick={handleCloseDialog} variant="contained" color="primary">
+                                <Button onClick={handleCloseDialog} variant="contained"
+                                sx={{
+                                    backgroundColor: grey[700], // Color de fondo personalizado
+                                    color: '#FFF', // Color de texto (blanco)
+                                    '&:hover': {
+                                        backgroundColor: grey[800], // Color de fondo en hover
+                                    },
+                                }}
+                                >
                                     Cancelar
                                 </Button>
-                                <Button onClick={handleConfirmDelete}variant="contained" color="secondary">
+                                <Button onClick={handleConfirmDelete}variant="contained"
+                                sx={{
+                                    backgroundColor: green[600], // Color de fondo personalizado
+                                    color: '#FFF', // Color de texto (blanco)
+                                    '&:hover': {
+                                        backgroundColor: green[800], // Color de fondo en hover
+                                    },
+                                }}
+                                >
                                     Confirmar
                                 </Button>
                             </DialogActions>

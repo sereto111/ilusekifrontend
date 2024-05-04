@@ -155,14 +155,9 @@
   color: #c2185b;
 }
 
-#dark .dialog {
-  background-color: #3F3F3F;
+.dialog {
+  background-color: #E53935;
   color: #FFF;
-}
-
-#light .dialog {
-  background-color: #FFF;
-  color: #000;
 }
 
 /* START Profile styles | Usados en Profile, Buscador, InitialWindow */
