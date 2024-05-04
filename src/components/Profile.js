@@ -12,15 +12,24 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import UploadIcon from '@mui/icons-material/Upload';
-import { pink } from '@mui/material/colors';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { pink, red } from '@mui/material/colors';
 import { goInicio } from './Header';
 
 //TODO: Poner botón para ir a ruta upload | En Profile o Inicio
 
 export function Profile() {
     const apiUrl = process.env.REACT_APP_API_URL;
+
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [selectedIlustracion, setSelectedIlustracion] = useState(null);
 
     function goAddIllustration() {
         window.open("/upload", "_self");
@@ -47,8 +56,7 @@ export function Profile() {
 
     const enviarCorreoRecuperacion = async () => {
         try {
-            //TODO: Cambiar ruta | Hacer en backend
-            await axios.post('https://ilusekibackend.onrender.com/api/correo/recuperar-pass', {
+            await axios.post(`${apiUrl}/api/correo/recuperar-pass`, {
                 email: email
             });
 
@@ -90,6 +98,29 @@ export function Profile() {
         if (event.target === event.currentTarget) {
             handleCloseModal();
         }
+    };
+
+    const handleOpenDialog = (ilustracion) => {
+        setSelectedIlustracion(ilustracion);
+        setDialogOpen(true);
+    };
+
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+        setSelectedIlustracion(null);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (selectedIlustracion) {
+            try {
+                await axios.delete(`${apiUrl}/api/ilustration/eliminarIlustracion/${selectedIlustracion.nombre}`);
+                handleCloseDialog();            
+                window.location.reload();
+            } catch (error) {
+                //TODO quitar console
+                console.error('Error al eliminar la ilustración:', error);
+            }
+        }        
     };
 
     return (
@@ -194,6 +225,28 @@ export function Profile() {
                                 <div key={ilustracion._id} className="profile-grid-item" onClick={() => handleOpenModal(ilustracion)}>
                                     <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
                                     <p>{ilustracion.descripcion}</p>
+
+                                    {/* Solo poner botón de borrar al usuario logueado */}
+                                    {userLocalStorage === user && (
+                                        <Button
+                                            variant="contained"
+                                            onClick={(event) => {
+                                                // Evitar que se abra el modal
+                                                event.stopPropagation();
+
+                                                handleOpenDialog(ilustracion);
+                                            }}
+                                            sx={{
+                                                backgroundColor: red[600],
+                                                color: '#FFF',
+                                                '&:hover': {
+                                                    backgroundColor: red[900],
+                                                },
+                                            }}
+                                        >
+                                            <DeleteIcon />
+                                        </Button>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -206,6 +259,23 @@ export function Profile() {
                                 </div>
                             </div>
                         )}
+
+                        {/* Dialog de confirmación */}
+                        <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+                            <DialogTitle className='dialog'><span className='bold'>Confirmación</span></DialogTitle>
+                            <DialogContent className='dialog'>
+                                <p>¿Estás seguro de que deseas eliminar esta ilustración?</p>
+                            </DialogContent>
+                            <DialogActions className='dialog'>
+                                {/* TODO: Ver si cambiar colores a los botones */}
+                                <Button onClick={handleCloseDialog} variant="contained" color="primary">
+                                    Cancelar
+                                </Button>
+                                <Button onClick={handleConfirmDelete}variant="contained" color="secondary">
+                                    Confirmar
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </div>
 
                 </>

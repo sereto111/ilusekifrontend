@@ -155,6 +155,16 @@
   color: #c2185b;
 }
 
+#dark .dialog {
+  background-color: #3F3F3F;
+  color: #FFF;
+}
+
+#light .dialog {
+  background-color: #FFF;
+  color: #000;
+}
+
 /* START Profile styles | Usados en Profile, Buscador, InitialWindow */
 .profile-container {
   max-width: 1400px;
@@ -229,6 +239,16 @@
   color: #fff;
   padding: 10px;
   margin: 0;
+  box-sizing: border-box;
+}
+
+.profile-grid-item button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 5px;
+  margin-right: 5px;
+  margin-bottom: 3px;  
   box-sizing: border-box;
 }
 
