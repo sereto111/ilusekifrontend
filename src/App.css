@@ -131,6 +131,11 @@
 
 /* ----------------------------- */
 
+.fabR {
+  float: right;
+  right: 20px;
+}
+
 .bold {
   font-weight: 700;
 }

@@ -12,12 +12,19 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Fab from '@mui/material/Fab';
+import UploadIcon from '@mui/icons-material/Upload';
+import { pink } from '@mui/material/colors';
 import { goInicio } from './Header';
 
 //TODO: Poner botón para ir a ruta upload | En Profile o Inicio
 
 export function Profile() {
     const apiUrl = process.env.REACT_APP_API_URL;
+
+    function goAddIllustration() {
+        window.open("/upload", "_self");
+    }
 
     const delay = (ms) => {
         return new Promise((resolve) => setTimeout(resolve, ms));
@@ -90,6 +97,28 @@ export function Profile() {
             {/* Comprobar si hay usuario logueado */}
             {user ? (
                 <>
+                    {/* Compruebo que el usuario loguado está en su perfil */}
+                    {userLocalStorage === user && (
+                        <>
+                            <br />
+                            <Fab
+                                className="fabR"
+                                aria-label="add"
+                                onClick={goAddIllustration}
+                                sx={{
+                                    backgroundColor: pink[700],
+                                    '&:hover': {
+                                        backgroundColor: pink[900],
+                                    },
+                                    '& .MuiSvgIcon-root': {
+                                        color: '#FFF',
+                                    },
+                                }}
+                            >
+                                <UploadIcon />
+                            </Fab>
+                        </>
+                    )}
                     {/* TODO: Ver si hacer más ancho (menos separación a los lados) */}
                     <h1>Perfil de {user}</h1>
                     <Box display="flex" justifyContent="center">
@@ -137,9 +166,9 @@ export function Profile() {
                                                     <strong>Contraseña:</strong>
                                                     <br />
                                                     <Link to="#" color="#c2185b" onClick={enviarCorreoRecuperacion} underline="hover"
-                                                    className='custom-link'>
+                                                        className='custom-link'>
                                                         {'Cambiar contraseña'}
-                                                    
+
                                                     </Link>
 
                                                 </React.Fragment>
