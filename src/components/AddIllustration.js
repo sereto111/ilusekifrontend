@@ -6,14 +6,14 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
-import { goInicio } from './Header';
+import { goInicio, obtenerUserDescifrado } from './Header';
 import Alert from '@mui/material/Alert';
 /* import Webcam from 'react-webcam'; */
 
 export function AddIllustration() {
     const apiUrl = process.env.REACT_APP_API_URL;
 
-    const usuario = localStorage.getItem('user');
+    const usuario = obtenerUserDescifrado('user');
 
     const ColorButton = styled(Button)(({ theme }) => ({
         color: theme.palette.getContrastText(pink[700]),

@@ -21,7 +21,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { pink, red, green, grey } from '@mui/material/colors';
-import { goInicio } from './Header';
+import { goInicio, obtenerUserDescifrado, obtenerEmailDescifrado } from './Header';
 
 //TODO: Poner botón para ir a ruta upload | En Profile o Inicio
 
@@ -48,8 +48,8 @@ export function Profile() {
     const [ilustraciones, setIlustraciones] = useState([]);
     const [modalData, setModalData] = useState(null);
 
-    const userLocalStorage = localStorage.getItem('user');
-    const email = localStorage.getItem('email');
+    const userLocalStorage = obtenerUserDescifrado('user');
+    const email = obtenerEmailDescifrado('email');
 
     // Inicializa el estado con el usuario del parámetro o con un valor por defecto
     const [user] = useState(usuarioParam || userLocalStorage);

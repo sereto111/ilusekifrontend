@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { obtenerUserDescifrado } from './Header';
 
 export function InitialWindow() {
-  const user = localStorage.getItem('user');
+  const user = obtenerUserDescifrado('user');
   const [modalData, setModalData] = useState(null);
 
   // Estado para almacenar las ilustraciones mezcladas

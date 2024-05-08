@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import CryptoJS from 'crypto-js';
 import { ThemeContext } from '../App';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,6 +14,28 @@ import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import Divider from '@mui/material/Divider';
+
+const claveCifrado = process.env.REACT_APP_CLAVE_CIFRADO;
+
+export function descifrarUser(userCifrado) {
+  const bytes = CryptoJS.AES.decrypt(userCifrado, claveCifrado);
+  return bytes.toString(CryptoJS.enc.Utf8);
+}
+
+export function descifrarEmail(emailCifrado) {
+  const bytes = CryptoJS.AES.decrypt(emailCifrado, claveCifrado);
+  return bytes.toString(CryptoJS.enc.Utf8);
+}
+
+export function obtenerUserDescifrado() {
+  const userCifrado = localStorage.getItem('user');
+  return userCifrado ? descifrarUser(userCifrado) : null;
+}
+
+export function obtenerEmailDescifrado() {
+  const emailCifrado = localStorage.getItem('email');
+  return emailCifrado ? descifrarEmail(emailCifrado) : null;
+}
 
 export function goInicio() {
   window.open("/", "_self");
@@ -99,7 +122,7 @@ const MaterialUISwitch = styled(Switch)(() => ({
 
 export default function Header() {
 
-  const user = localStorage.getItem('user');
+  const user = obtenerUserDescifrado('user');
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 

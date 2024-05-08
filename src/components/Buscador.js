@@ -106,7 +106,7 @@ export function Buscador() {
                         <div className="modal-content">
                             <span className="close" onClick={handleCloseModal}>&times;</span>
                             <img src={modalData.imagen.secure_url} alt={modalData.nombre} />
-                            <p>{modalData.descripcion}</p>
+                            <p className='descOverflow'>{modalData.descripcion}</p>
                         </div>
                     </div>
                 )}

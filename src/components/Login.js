@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CryptoJS from 'crypto-js';
 import axios from 'axios';
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
@@ -12,6 +13,34 @@ import { goInicio } from './Header';
 
 export function Login() {
   const apiUrl = process.env.REACT_APP_API_URL;
+  const claveCifrado = process.env.REACT_APP_CLAVE_CIFRADO;
+
+  function cifrarUser(user) {
+    try {
+      return CryptoJS.AES.encrypt(user, claveCifrado).toString();
+    } catch (error) {      
+      return null;
+    }
+  }
+
+  function cifrarEmail(email) {
+    try {
+      return CryptoJS.AES.encrypt(email, claveCifrado).toString();
+    } catch (error) {      
+      return null;
+    }
+  }
+
+
+  function almacenarUserCifrado(user) {
+    const userCifrado = cifrarUser(user);
+    localStorage.setItem('user', userCifrado);
+  }
+
+  function almacenarEmailCifrado(email) {
+    const emailCifrado = cifrarEmail(email);
+    localStorage.setItem('email', emailCifrado);
+  }
 
   function goMailPass() {
     window.open("/mail-pass", "_self");
@@ -54,11 +83,14 @@ export function Login() {
       setShowAlertSuccess(true);
       await delay(1500); // Espera de 1.5 segundos
       const user = response.data.nombre;
-      setUser(user);
+      //setUser(user);
       const email = response.data.email;
-      setEmail(email);
-      localStorage.setItem('user', user);
-      localStorage.setItem('email', email);
+      //setEmail(email);
+      if (user && email) {
+        // Cifrar y almacenar user y email si están definidos
+        almacenarUserCifrado(user);
+        almacenarEmailCifrado(email);
+      }
       goInicio();
     } catch (error) {
       setShowAlertError(true);
@@ -87,10 +119,10 @@ export function Login() {
           <TextField className='register'
             id="outlined-required"
             label="Email"
-            variant="filled"           
+            variant="filled"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            sx={{              
+            sx={{
               '&:focus-within label': {
                 color: '#C2185B',
               },
@@ -107,7 +139,7 @@ export function Login() {
             autoComplete="current-password"
             value={password}
             onChange={e => setPassword(e.target.value)}
-            sx={{              
+            sx={{
               '&:focus-within label': {
                 color: '#C2185B',
               },
