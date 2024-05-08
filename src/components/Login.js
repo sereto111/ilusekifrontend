@@ -31,7 +31,6 @@ export function Login() {
     }
   }
 
-
   function almacenarUserCifrado(user) {
     const userCifrado = cifrarUser(user);
     localStorage.setItem('user', userCifrado);
@@ -83,9 +82,9 @@ export function Login() {
       setShowAlertSuccess(true);
       await delay(1500); // Espera de 1.5 segundos
       const user = response.data.nombre;
-      //setUser(user);
+      setUser(user);
       const email = response.data.email;
-      //setEmail(email);
+      setEmail(email);
       if (user && email) {
         // Cifrar y almacenar user y email si están definidos
         almacenarUserCifrado(user);
