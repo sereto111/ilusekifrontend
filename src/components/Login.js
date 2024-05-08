@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
 import Link from '@mui/material/Link';
@@ -15,22 +15,16 @@ export function Login() {
   const apiUrl = process.env.REACT_APP_API_URL;
   const claveCifrado = process.env.REACT_APP_CLAVE_CIFRADO;
 
+  // Define funciones para cifrar datos
   function cifrarUser(user) {
-    try {
-      return CryptoJS.AES.encrypt(user, claveCifrado).toString();
-    } catch (error) {      
-      return null;
-    }
+    return CryptoJS.AES.encrypt(user, claveCifrado).toString();
   }
 
   function cifrarEmail(email) {
-    try {
-      return CryptoJS.AES.encrypt(email, claveCifrado).toString();
-    } catch (error) {      
-      return null;
-    }
+    return CryptoJS.AES.encrypt(email, claveCifrado).toString();
   }
 
+  // Define funciones para almacenar datos cifrados en localStorage
   function almacenarUserCifrado(user) {
     const userCifrado = cifrarUser(user);
     localStorage.setItem('user', userCifrado);
@@ -61,7 +55,7 @@ export function Login() {
   const [showAlertError, setShowAlertError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [, setUser] = useState('');
+  const [user, setUser] = useState('');
 
   const handleButtonClick = async () => {
     const logedUser = {
@@ -76,100 +70,118 @@ export function Login() {
         headers: {
           'Content-Type': 'application/json'
         }
-      })
+      });
 
-      //Mensaje de inicio correcto - Ir a inicio y cambiar botones header
+      // Inicio de sesión exitoso
       setShowAlertSuccess(true);
       await delay(1500); // Espera de 1.5 segundos
+
+      // Actualiza el estado de user y email
       const user = response.data.nombre;
-      setUser(user);
       const email = response.data.email;
+      setUser(user);
       setEmail(email);
-      if (user && email) {
-        // Cifrar y almacenar user y email si están definidos
-        almacenarUserCifrado(user);
-        almacenarEmailCifrado(email);
-      }
+
+      // Ir a inicio
       goInicio();
     } catch (error) {
+      // Manejo de error de inicio de sesión
       setShowAlertError(true);
-      await delay(5000); // Espera de 5 segundos
+      await delay(5000);
       setShowAlertError(false);
     }
   };
 
+  // Efecto para almacenar user y email cifrados en localStorage cuando user cambia
+  useEffect(() => {
+    if (user && email) {
+      almacenarUserCifrado(user);
+      almacenarEmailCifrado(email);
+    }
+  }, [user, email]); // Se ejecuta cuando user o email cambian
+
   return (
     <>
-      <h1>Login</h1>
+      {localStorage.getItem('user') ? (
+        <>
+          {/* Mostrar contenido cuando el usuario está autenticado */}
+          <section id="content">
+            <h2>Sesión ya iniciada</h2>
+            <p>Ya tienes una sesión iniciada.<br/>Cierra la sesión actual en caso de querer entrar con otra cuenta.</p>
+          </section>
+        </>
+      ) : (
+        <>
+          {/* Mostrar contenido cuando el usuario no está autenticado */}
+          <h1>Login</h1>
 
-      <Box display="flex" justifyContent="center">
-        <Stack
-          component="form"
-          sx={{
-            width: '25ch',
-          }}
-          direction="column"
-          spacing={2}
-          noValidate
-          autoComplete="off"
-          style={{ minHeight: '100vh' }}
-        >
+          <Box display="flex" justifyContent="center">
+            <Stack
+              component="form"
+              sx={{
+                width: '25ch',
+              }}
+              direction="column"
+              spacing={2}
+              noValidate
+              autoComplete="off"
+              style={{ minHeight: '100vh' }}
+            >
+              <TextField className='register'
+                id="outlined-required"
+                label="Email"
+                variant="filled"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                sx={{
+                  '&:focus-within label': {
+                    color: '#C2185B',
+                  },
+                  '& .MuiFilledInput-underline:after': {
+                    borderBottomColor: '#C2185B',
+                  },
+                }}
+              />
+              <TextField className='register'
+                id="outlined-required"
+                label="Contraseña"
+                variant="filled"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                sx={{
+                  '&:focus-within label': {
+                    color: '#C2185B',
+                  },
+                  '& .MuiFilledInput-underline:after': {
+                    borderBottomColor: '#C2185B',
+                  },
+                }}
+              />
+              <Link to="#" onClick={goMailPass} color="#C2185B" underline="hover">
+                <b>{'Recuperar contraseña'}</b>
+              </Link>
+              <ColorButton variant="contained" onClick={handleButtonClick}>Iniciar sesión</ColorButton>
+              <div className='center'>
+                {showAlertSuccess && (
+                  <Stack sx={{ width: '100%' }} spacing={2}>
+                    <Alert severity="success">Inicio de sesión correcto</Alert>
+                  </Stack>
+                )}
+              </div>
 
-          <TextField className='register'
-            id="outlined-required"
-            label="Email"
-            variant="filled"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            sx={{
-              '&:focus-within label': {
-                color: '#C2185B',
-              },
-              '& .MuiFilledInput-underline:after': {
-                borderBottomColor: '#C2185B',
-              },
-            }}
-          />
-          <TextField className='register'
-            id="outlined-required"
-            label="Contraseña"
-            variant="filled"
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            sx={{
-              '&:focus-within label': {
-                color: '#C2185B',
-              },
-              '& .MuiFilledInput-underline:after': {
-                borderBottomColor: '#C2185B',
-              },
-            }}
-          />
-          <Link to="#" onClick={goMailPass} color="#C2185B" underline="hover">
-            <b>{'Recuperar contraseña'}</b>
-          </Link>
-          <ColorButton variant="contained" onClick={handleButtonClick}>Iniciar sesión</ColorButton>
-          <div className='center'>
-            {showAlertSuccess && (
-              <Stack sx={{ width: '100%' }} spacing={2}>
-                <Alert severity="success">Inicio de sesión correcto</Alert>
-              </Stack>
-            )}
-          </div>
-
-          <div className='center'>
-            {showAlertError && (
-              <Stack sx={{ width: '100%' }} spacing={2}>
-                <Alert severity="error">Inicio de sesión fallido</Alert>
-              </Stack>
-            )}
-          </div>
-        </Stack>
-
-      </Box>
-
+              <div className='center'>
+                {showAlertError && (
+                  <Stack sx={{ width: '100%' }} spacing={2}>
+                    <Alert severity="error">Inicio de sesión fallido</Alert>
+                  </Stack>
+                )}
+              </div>
+            </Stack>
+          </Box>
+        </>
+      )}
     </>
-  )
+  );
 }
