@@ -98,7 +98,7 @@ export function Login() {
       almacenarUserCifrado(user);
       almacenarEmailCifrado(email);
     }
-  }, [user, email]); // Se ejecuta cuando user o email cambian
+  }, [user, email, almacenarEmailCifrado, almacenarUserCifrado]); // Se ejecuta cuando user o email cambian
 
   return (
     <>
