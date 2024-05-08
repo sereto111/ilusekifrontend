@@ -16,13 +16,13 @@ export function Login() {
   const claveCifrado = process.env.REACT_APP_CLAVE_CIFRADO;
 
   // Define funciones para cifrar datos
-  function cifrarUser(user) {
+  const cifrarUser = useCallback((user) => {
     return CryptoJS.AES.encrypt(user, claveCifrado).toString();
-  }
+  }, [claveCifrado]);
 
-  function cifrarEmail(email) {
+  const cifrarEmail = useCallback((email) => {
     return CryptoJS.AES.encrypt(email, claveCifrado).toString();
-  }
+  }, [claveCifrado]);
 
   // Define funciones para almacenar datos cifrados en localStorage
   const almacenarUserCifrado = useCallback((user) => {
