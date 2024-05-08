@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CryptoJS from 'crypto-js';
 import axios from 'axios';
 import Link from '@mui/material/Link';
@@ -25,15 +25,15 @@ export function Login() {
   }
 
   // Define funciones para almacenar datos cifrados en localStorage
-  function almacenarUserCifrado(user) {
+  const almacenarUserCifrado = useCallback((user) => {
     const userCifrado = cifrarUser(user);
     localStorage.setItem('user', userCifrado);
-  }
+  }, [cifrarUser]);
 
-  function almacenarEmailCifrado(email) {
+  const almacenarEmailCifrado = useCallback((email) => {
     const emailCifrado = cifrarEmail(email);
     localStorage.setItem('email', emailCifrado);
-  }
+  }, [cifrarEmail]);
 
   function goMailPass() {
     window.open("/mail-pass", "_self");
@@ -107,7 +107,7 @@ export function Login() {
           {/* Mostrar contenido cuando el usuario está autenticado */}
           <section id="content">
             <h2>Sesión ya iniciada</h2>
-            <p>Ya tienes una sesión iniciada.<br/>Cierra la sesión actual en caso de querer entrar con otra cuenta.</p>
+            <p>Ya tienes una sesión iniciada.<br />Cierra la sesión actual en caso de querer entrar con otra cuenta.</p>
           </section>
         </>
       ) : (
