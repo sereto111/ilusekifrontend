@@ -38,7 +38,7 @@ export function InitialWindow() {
     } catch (error) {
       console.error('Error al obtener las ilustraciones:', error);
     }
-  }, [apiUrl]);
+  }, [apiUrl, user]);
 
   // Llama a la función obtenerIlustraciones cuando se monta el componente
   useEffect(() => {
