@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export function InitialWindow() {
+  const user = localStorage.getItem('user');
   const [modalData, setModalData] = useState(null);
 
   // Estado para almacenar las ilustraciones mezcladas
@@ -26,9 +27,13 @@ export function InitialWindow() {
     try {
       const response = await axios.get(`${apiUrl}/api/ilustration/listarIlustraciones`);
       if (response.data.ok) {
-        // Mezclar las ilustraciones antes de guardarlas en el estado
+        // Mezclar las ilustraciones
         const ilustracionesMezcladas = mezclarArray(response.data.ilustraciones);
-        setIlustracionesMezcladas(ilustracionesMezcladas);
+
+        // Filtrar las ilustraciones mezcladas para excluir las del usuario logueado antes de guardarlas en el estado
+        const ilustracionesFiltradas = ilustracionesMezcladas.filter(ilustracion => ilustracion.usuario !== user);
+
+        setIlustracionesMezcladas(ilustracionesFiltradas);
       }
     } catch (error) {
       console.error('Error al obtener las ilustraciones:', error);
