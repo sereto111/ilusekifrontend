@@ -144,6 +144,10 @@
   font-size: xx-large;
 }
 
+.descOverflow {
+  overflow-x: scroll;
+}
+
 .custom-link,
 .custom-link:focus,
 .custom-link:visited {
@@ -186,12 +190,14 @@
 }
 
 /* START Profile barra scroll imágenes */
-.profile-grid-container::-webkit-scrollbar {
+.profile-grid-container::-webkit-scrollbar,
+.descOverflow::-webkit-scrollbar {
   height: 12px;
   /* Altura de la barra de desplazamiento */
 }
 
-.profile-grid-container::-webkit-scrollbar-thumb {
+.profile-grid-container::-webkit-scrollbar-thumb,
+.descOverflow::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
 }
@@ -225,16 +231,16 @@
   padding: 0;
 }
 
-.profile-grid-item p {
+.profile-grid-item div {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
-  padding: 10px;
+  padding: 20px;
   margin: 0;
-  box-sizing: border-box;
+  box-sizing: border-box;  
 }
 
 .profile-grid-item button {

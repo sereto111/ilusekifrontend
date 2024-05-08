@@ -114,13 +114,13 @@ export function Profile() {
         if (selectedIlustracion) {
             try {
                 await axios.delete(`${apiUrl}/api/ilustration/eliminarIlustracion/${selectedIlustracion.nombre}`);
-                handleCloseDialog();            
+                handleCloseDialog();
                 window.location.reload();
             } catch (error) {
                 //TODO quitar console
                 console.error('Error al eliminar la ilustración:', error);
             }
-        }        
+        }
     };
 
     return (
@@ -224,28 +224,29 @@ export function Profile() {
                             {ilustraciones.map((ilustracion) => (
                                 <div key={ilustracion._id} className="profile-grid-item" onClick={() => handleOpenModal(ilustracion)}>
                                     <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
-                                    <p>{ilustracion.descripcion}</p>
 
                                     {/* Solo poner botón de borrar al usuario logueado */}
                                     {userLocalStorage === user && (
-                                        <Button
-                                            variant="contained"
-                                            onClick={(event) => {
-                                                // Evitar que se abra el modal
-                                                event.stopPropagation();
+                                        <div>
+                                            <Button
+                                                variant="contained"
+                                                onClick={(event) => {
+                                                    // Evitar que se abra el modal
+                                                    event.stopPropagation();
 
-                                                handleOpenDialog(ilustracion);
-                                            }}
-                                            sx={{
-                                                backgroundColor: red[600],
-                                                color: '#FFF',
-                                                '&:hover': {
-                                                    backgroundColor: red[900],
-                                                },
-                                            }}
-                                        >
-                                            <DeleteIcon />
-                                        </Button>
+                                                    handleOpenDialog(ilustracion);
+                                                }}
+                                                sx={{
+                                                    backgroundColor: red[600],
+                                                    color: '#FFF',
+                                                    '&:hover': {
+                                                        backgroundColor: red[900],
+                                                    },
+                                                }}
+                                            >
+                                                <DeleteIcon />
+                                            </Button>
+                                        </div>
                                     )}
                                 </div>
                             ))}
@@ -255,7 +256,7 @@ export function Profile() {
                                 <div className="modal-content">
                                     <span className="close" onClick={handleCloseModal}>&times;</span>
                                     <img src={modalData.imagen.secure_url} alt={modalData.nombre} />
-                                    <p>{modalData.descripcion}</p>
+                                    <p className='descOverflow'>{modalData.descripcion}</p>
                                 </div>
                             </div>
                         )}
@@ -269,24 +270,24 @@ export function Profile() {
                             <DialogActions className='dialog'>
                                 {/* TODO: Ver si cambiar colores a los botones */}
                                 <Button onClick={handleCloseDialog} variant="contained"
-                                sx={{
-                                    backgroundColor: grey[700], // Color de fondo personalizado
-                                    color: '#FFF', // Color de texto (blanco)
-                                    '&:hover': {
-                                        backgroundColor: grey[800], // Color de fondo en hover
-                                    },
-                                }}
+                                    sx={{
+                                        backgroundColor: grey[700], // Color de fondo personalizado
+                                        color: '#FFF', // Color de texto (blanco)
+                                        '&:hover': {
+                                            backgroundColor: grey[800], // Color de fondo en hover
+                                        },
+                                    }}
                                 >
                                     Cancelar
                                 </Button>
-                                <Button onClick={handleConfirmDelete}variant="contained"
-                                sx={{
-                                    backgroundColor: green[600], // Color de fondo personalizado
-                                    color: '#FFF', // Color de texto (blanco)
-                                    '&:hover': {
-                                        backgroundColor: green[800], // Color de fondo en hover
-                                    },
-                                }}
+                                <Button onClick={handleConfirmDelete} variant="contained"
+                                    sx={{
+                                        backgroundColor: green[600], // Color de fondo personalizado
+                                        color: '#FFF', // Color de texto (blanco)
+                                        '&:hover': {
+                                            backgroundColor: green[800], // Color de fondo en hover
+                                        },
+                                    }}
                                 >
                                     Confirmar
                                 </Button>
