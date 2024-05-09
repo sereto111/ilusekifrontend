@@ -4,7 +4,7 @@ import { Error } from './Error';
 //import { InitialWindow } from './InitialWindow';
 import { InitialWindow } from './InitialWindow';
 //import { News } from './News';
-//import { Wishlist } from './Wishlist';
+import { SavedList } from './SavedList';
 import { Register } from './Register';
 import { Login } from './Login';
 //import { About } from './About';
@@ -27,9 +27,9 @@ export const Ruta = () => {
                     <Route exact path='/' element={<InitialWindow/>}></Route>
                     <Route exact path='/register' element={<Register/>}></Route>
                     <Route exact path='/login' element={<Login/>}></Route>
-                  {/*<Route exact path="/news" component={News}></Route>
-                  <Route exact path="/wishlist" component={Wishlist}></Route>
-                  <Route exact path="/completed" component={Completed}></Route>*/}
+                  {/*<Route exact path="/news" component={News}></Route>*/}
+                  <Route exact path='/saved' element={<SavedList/>}></Route>
+                  {/*<Route exact path="/completed" component={Completed}></Route>*/}
                     <Route exact path='/search' element={<Buscador/>}></Route>
                   {/*<Route exact path="/about" component={About}></Route>*/}
                   <Route exact path='/upload' element={<AddIllustration/>}></Route>
