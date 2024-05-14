@@ -253,6 +253,16 @@
   box-sizing: border-box;
 }
 
+.profile-grid-item .second-button {
+  position: absolute;
+  bottom: 0;
+  right: 70px;
+  padding: 5px;
+  margin-right: 5px;
+  margin-bottom: 3px;
+  box-sizing: border-box;
+}
+
 .profile-grid-item img {
   max-width: 100%;
   height: 100%;

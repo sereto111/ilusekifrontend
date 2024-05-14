@@ -20,7 +20,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { pink, red, green, grey } from '@mui/material/colors';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { pink, red, green, grey, teal } from '@mui/material/colors';
 import { goInicio, obtenerUserDescifrado, obtenerEmailDescifrado } from './Header';
 
 //TODO: Poner botón para ir a ruta upload | En Profile o Inicio
@@ -30,6 +32,7 @@ export function Profile() {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedIlustracion, setSelectedIlustracion] = useState(null);
+    const [ilustracionesGuardadas, setIlustracionesGuardadas] = useState([]);
 
     function goAddIllustration() {
         window.open("/upload", "_self");
@@ -84,6 +87,23 @@ export function Profile() {
 
         fetchIlustraciones();
     }, [apiUrl, user]);
+
+    useEffect(() => {
+        const fetchIlustracionesGuardadas = async () => {
+            try {
+                const response = await axios.get(`${apiUrl}/api/ilustration/guardados/listar`);
+                setIlustracionesGuardadas(response.data.guardados);
+            } catch (error) {
+                console.error('Error al obtener las ilustraciones guardadas:', error);
+            }
+        };
+
+        fetchIlustracionesGuardadas();
+    }, [apiUrl]);
+
+    const esPropietario = (imagen) => {
+        return ilustracionesGuardadas.some(ilustracion => ilustracion.nombre === imagen.nombre);
+    };
 
     //Abrir y cerrar modal
     const handleOpenModal = (ilustracion) => {
@@ -226,8 +246,33 @@ export function Profile() {
                                     <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
 
                                     {/* Solo poner botón de borrar al usuario logueado */}
-                                    {userLocalStorage === user && (
+                                    {userLocalStorage === user ? (
                                         <div>
+                                            {/* Botón de guardado */}
+                                            <Button
+                                                variant="contained"
+                                                className='second-button'
+                                                onClick={(event) => {
+                                                    // Evitar que se abra el modal
+                                                    event.stopPropagation();
+                                                }}
+                                                sx={{
+                                                    backgroundColor: teal[400],
+                                                    color: '#FFF',
+                                                    '&:hover': {
+                                                        backgroundColor: teal[700],
+                                                    },
+                                                }}
+                                            >
+                                                {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
+                                                {esPropietario(ilustracion) ? (
+                                                    <BookmarkIcon />
+                                                ) : (
+                                                    <BookmarkBorderIcon />
+                                                )}
+                                            </Button>
+
+                                            {/* Botón de eliminar */}
                                             <Button
                                                 variant="contained"
                                                 onClick={(event) => {
@@ -247,7 +292,33 @@ export function Profile() {
                                                 <DeleteIcon />
                                             </Button>
                                         </div>
+                                    ) : (
+                                        <div>
+                                            {/* Botón de guardado */}
+                                            <Button
+                                                variant="contained"
+                                                onClick={(event) => {
+                                                    // Evitar que se abra el modal
+                                                    event.stopPropagation();
+                                                }}
+                                                sx={{
+                                                    backgroundColor: teal[400],
+                                                    color: '#FFF',
+                                                    '&:hover': {
+                                                        backgroundColor: teal[700],
+                                                    },
+                                                }}
+                                            >
+                                                {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
+                                                {esPropietario(ilustracion) ? (
+                                                    <BookmarkIcon />
+                                                ) : (
+                                                    <BookmarkBorderIcon />
+                                                )}
+                                            </Button>
+                                        </div>
                                     )}
+
                                 </div>
                             ))}
                         </div>

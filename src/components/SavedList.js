@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { obtenerUserDescifrado } from './Header';
 
@@ -136,6 +137,7 @@ export function SavedList() {
                             <div className="modal" onClick={handleCloseModalClickOutside}>
                                 <div className="modal-content">
                                     <span className="close" onClick={handleCloseModal}>&times;</span>
+                                    <Link to={`/profile?usuario=${modalData.usuario}`} className='custom-link'><p className='big'><span className='bold'>Autor: </span>{modalData.usuario}</p></Link>
                                     <img src={modalData.imagen.secure_url} alt={modalData.nombre} />
                                     <p className='descOverflow'>{modalData.descripcion}</p>
                                 </div>
