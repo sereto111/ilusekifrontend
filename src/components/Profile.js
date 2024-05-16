@@ -105,6 +105,45 @@ export function Profile() {
         return ilustracionesGuardadas.some(ilustracion => ilustracion.nombre === imagen.nombre);
     };
 
+    const handleToggleGuardado = async (event, ilustracion) => {
+        event.stopPropagation();
+
+        try {
+            if (!esPropietario(ilustracion)) {
+                await axios.post(`${apiUrl}/api/ilustration/guardados/agregar`, {
+                    nombre: ilustracion.nombre,
+                    propietario: userLocalStorage,
+                });
+
+                setIlustracionesGuardadas([...ilustracionesGuardadas, { ...ilustracion, propietario: userLocalStorage }]);
+
+                // Actualizar el estado local de la ilustración para reflejar el cambio de guardado
+                setIlustraciones(prevIlustraciones =>
+                    prevIlustraciones.map(prevIlustracion =>
+                        prevIlustracion.nombre === ilustracion.nombre
+                            ? { ...prevIlustracion, guardado: true }
+                            : prevIlustracion
+                    )
+                );
+            } else {
+                await axios.delete(`${apiUrl}/api/ilustration/guardados/eliminar/${ilustracion.nombre}/${userLocalStorage}`);
+
+                setIlustracionesGuardadas(ilustracionesGuardadas.filter((item) => item.nombre !== ilustracion.nombre));
+
+                // Actualizar el estado local de la ilustración para reflejar el cambio de guardado
+                setIlustraciones(prevIlustraciones =>
+                    prevIlustraciones.map(prevIlustracion =>
+                        prevIlustracion.nombre === ilustracion.nombre
+                            ? { ...prevIlustracion, guardado: false }
+                            : prevIlustracion
+                    )
+                );
+            }
+        } catch (error) {
+            console.error('Error al actualizar el estado de guardado:', error);
+        }
+    };
+
     //Abrir y cerrar modal
     const handleOpenModal = (ilustracion) => {
         setModalData(ilustracion);
@@ -245,33 +284,8 @@ export function Profile() {
                                 <div key={ilustracion._id} className="profile-grid-item" onClick={() => handleOpenModal(ilustracion)}>
                                     <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
 
-                                    {/* Solo poner botón de borrar al usuario logueado */}
-                                    {userLocalStorage === user ? (
+                                    {userLocalStorage === ilustracion.usuario && (
                                         <div>
-                                            {/* Botón de guardado */}
-                                            <Button
-                                                variant="contained"
-                                                className='second-button'
-                                                onClick={(event) => {
-                                                    // Evitar que se abra el modal
-                                                    event.stopPropagation();
-                                                }}
-                                                sx={{
-                                                    backgroundColor: teal[400],
-                                                    color: '#FFF',
-                                                    '&:hover': {
-                                                        backgroundColor: teal[700],
-                                                    },
-                                                }}
-                                            >
-                                                {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
-                                                {esPropietario(ilustracion) ? (
-                                                    <BookmarkIcon />
-                                                ) : (
-                                                    <BookmarkBorderIcon />
-                                                )}
-                                            </Button>
-
                                             {/* Botón de eliminar */}
                                             <Button
                                                 variant="contained"
@@ -292,34 +306,33 @@ export function Profile() {
                                                 <DeleteIcon />
                                             </Button>
                                         </div>
-                                    ) : (
-                                        <div>
-                                            {/* Botón de guardado */}
-                                            <Button
-                                                variant="contained"
-                                                onClick={(event) => {
-                                                    // Evitar que se abra el modal
-                                                    event.stopPropagation();
-                                                }}
-                                                sx={{
-                                                    backgroundColor: teal[400],
-                                                    color: '#FFF',
-                                                    '&:hover': {
-                                                        backgroundColor: teal[700],
-                                                    },
-                                                }}
-                                            >
-                                                {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
-                                                {esPropietario(ilustracion) ? (
-                                                    <BookmarkIcon />
-                                                ) : (
-                                                    <BookmarkBorderIcon />
-                                                )}
-                                            </Button>
-                                        </div>
                                     )}
-
+                                    {/* Botón de guardado */}
+                                    <Button
+                                        variant="contained"
+                                        className={userLocalStorage === ilustracion.usuario ? 'second-button' : ''}
+                                        onClick={(event) => {
+                                            // Evitar que se abra el modal
+                                            event.stopPropagation();
+                                            handleToggleGuardado(event, ilustracion);
+                                        }}
+                                        sx={{
+                                            backgroundColor: teal[400],
+                                            color: '#FFF',
+                                            '&:hover': {
+                                                backgroundColor: teal[700],
+                                            },
+                                        }}
+                                    >
+                                        {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
+                                        {esPropietario(ilustracion) ? (
+                                            <BookmarkIcon />
+                                        ) : (
+                                            <BookmarkBorderIcon />
+                                        )}
+                                    </Button>
                                 </div>
+
                             ))}
                         </div>
                         {modalData && (

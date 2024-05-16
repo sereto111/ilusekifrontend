@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { obtenerUserDescifrado } from './Header';
+import Fab from '@mui/material/Fab';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import DeleteIcon from '@mui/icons-material/Delete';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import CachedIcon from '@mui/icons-material/Cached';
+import { pink, red, green, grey, teal } from '@mui/material/colors';
+import { obtenerUserDescifrado, goSaved } from './Header';
 
 /* TODO: Poner botón para agregar guardados en las ilustraciones | Poner botón para quitar de guardados */
 export function SavedList() {
@@ -11,8 +22,11 @@ export function SavedList() {
     //const [selectedIlustracion, setSelectedIlustracion] = useState(null);
 
     //const [showAlertSuccess, setShowAlertSuccess] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [selectedIlustracion, setSelectedIlustracion] = useState(null);
     const [ilustraciones, setIlustraciones] = useState([]);
     const [modalData, setModalData] = useState(null);
+    const [ilustracionesGuardadas, setIlustracionesGuardadas] = useState([]);
 
     const userLocalStorage = obtenerUserDescifrado('user');
 
@@ -43,6 +57,62 @@ export function SavedList() {
         // Llama a la función para hacer la petición
         fetchGuardados();
     }, [apiUrl, user]);
+
+    useEffect(() => {
+        const fetchIlustracionesGuardadas = async () => {
+            try {
+                const response = await axios.get(`${apiUrl}/api/ilustration/guardados/listar`);
+                setIlustracionesGuardadas(response.data.guardados);
+            } catch (error) {
+                console.error('Error al obtener las ilustraciones guardadas:', error);
+            }
+        };
+
+        fetchIlustracionesGuardadas();
+    }, [apiUrl]);
+
+    const esPropietario = (imagen) => {
+        return ilustracionesGuardadas.some(ilustracion => ilustracion.nombre === imagen.nombre);
+    };
+
+    const handleToggleGuardado = async (event, ilustracion) => {
+        event.stopPropagation();
+
+        try {
+            if (!esPropietario(ilustracion)) {
+                await axios.post(`${apiUrl}/api/ilustration/guardados/agregar`, {
+                    nombre: ilustracion.nombre,
+                    propietario: userLocalStorage,
+                });
+
+                setIlustracionesGuardadas([...ilustracionesGuardadas, { ...ilustracion, propietario: userLocalStorage }]);
+
+                // Actualizar el estado local de la ilustración para reflejar el cambio de guardado
+                setIlustraciones(prevIlustraciones =>
+                    prevIlustraciones.map(prevIlustracion =>
+                        prevIlustracion.nombre === ilustracion.nombre
+                            ? { ...prevIlustracion, guardado: true }
+                            : prevIlustracion
+                    )
+                );
+            } else {
+                await axios.delete(`${apiUrl}/api/ilustration/guardados/eliminar/${ilustracion.nombre}/${userLocalStorage}`);
+
+                setIlustracionesGuardadas(ilustracionesGuardadas.filter((item) => item.nombre !== ilustracion.nombre));
+
+                // Actualizar el estado local de la ilustración para reflejar el cambio de guardado
+                setIlustraciones(prevIlustraciones =>
+                    prevIlustraciones.map(prevIlustracion =>
+                        prevIlustracion.nombre === ilustracion.nombre
+                            ? { ...prevIlustracion, guardado: false }
+                            : prevIlustracion
+                    )
+                );
+            }
+        } catch (error) {
+            console.error('Error al actualizar el estado de guardado:', error);
+        }
+    };
 
     //Abrir y cerrar modal
     const handleOpenModal = (guardado) => {
@@ -83,8 +153,60 @@ export function SavedList() {
         }
     };*/
 
+    const handleOpenDialog = (ilustracion) => {
+        setSelectedIlustracion(ilustracion);
+        setDialogOpen(true);
+    };
+
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+        setSelectedIlustracion(null);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (selectedIlustracion) {
+            try {                 
+                // Verificar si la ilustración está en la lista de guardados y eliminarla si es así
+                if (esPropietario(selectedIlustracion)) {
+                    await axios.delete(`${apiUrl}/api/ilustration/guardados/eliminar/${selectedIlustracion.nombre}/${userLocalStorage}`);
+                
+                }                   
+                // Eliminar la ilustración seleccionada
+                await axios.delete(`${apiUrl}/api/ilustration/eliminarIlustracion/${selectedIlustracion.nombre}`);
+                
+                
+
+                // Cerrar el diálogo después de eliminar la ilustración
+                handleCloseDialog();
+                
+                goSaved();
+            } catch (error) {
+                console.error('Error al eliminar la ilustración:', error);
+            }
+        }
+    };
+
     return (
         <>
+
+            <br />
+            <Fab
+                className="fabR"
+                aria-label="reload"
+                onClick={goSaved}
+                sx={{
+                    backgroundColor: pink[700],
+                    '&:hover': {
+                        backgroundColor: pink[900],
+                    },
+                    '& .MuiSvgIcon-root': {
+                        color: '#FFF',
+                    },
+                }}
+            >
+                <CachedIcon />
+            </Fab>
+
             {/* Comprobar si hay usuario logueado */}
             {user ? (
                 <>
@@ -99,31 +221,57 @@ export function SavedList() {
                                     <div key={ilustracion._id} className="profile-grid-item" onClick={() => handleOpenModal(ilustracion)}>
                                         <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
 
-                                        {/* Solo poner botón de borrar al usuario logueado */}
-                                        {/* {userLocalStorage === user && (
-                                        <div>
-                                            <Button
-                                                variant="contained"
-                                                onClick={(event) => {
-                                                    // Evitar que se abra el modal
-                                                    event.stopPropagation();
+                                        {userLocalStorage === ilustracion.usuario && (
+                                            <div>
+                                                {/* Botón de eliminar */}
+                                                <Button
+                                                    variant="contained"
+                                                    onClick={(event) => {
+                                                        // Evitar que se abra el modal
+                                                        event.stopPropagation();
 
-                                                    handleOpenDialog(ilustracion);
-                                                }}
-                                                sx={{
-                                                    backgroundColor: red[600],
-                                                    color: '#FFF',
-                                                    '&:hover': {
-                                                        backgroundColor: red[900],
-                                                    },
-                                                }}
-                                            >
-                                                <DeleteIcon />
-                                            </Button>
-                                        </div>
-                                    )} */}
+                                                        handleOpenDialog(ilustracion);
+                                                    }}
+                                                    sx={{
+                                                        backgroundColor: red[600],
+                                                        color: '#FFF',
+                                                        '&:hover': {
+                                                            backgroundColor: red[900],
+                                                        },
+                                                    }}
+                                                >
+                                                    <DeleteIcon />
+                                                </Button>
+                                            </div>
+                                        )}
+                                        {/* Botón de guardado */}
+                                        <Button
+                                            variant="contained"
+                                            className={userLocalStorage === ilustracion.usuario ? 'second-button' : ''}
+                                            onClick={(event) => {
+                                                // Evitar que se abra el modal
+                                                event.stopPropagation();
+                                                handleToggleGuardado(event, ilustracion);
+                                            }}
+                                            sx={{
+                                                backgroundColor: teal[400],
+                                                color: '#FFF',
+                                                '&:hover': {
+                                                    backgroundColor: teal[700],
+                                                },
+                                            }}
+                                        >
+                                            {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
+                                            {esPropietario(ilustracion) ? (
+                                                <BookmarkIcon />
+                                            ) : (
+                                                <BookmarkBorderIcon />
+                                            )}
+                                        </Button>
                                     </div>
+
                                 ))
+
                             ) : (
                                 // Muestra un mensaje si no hay ilustraciones guardadas
                                 <>
@@ -131,6 +279,7 @@ export function SavedList() {
                                     <p>No hay ilustraciones guardadas.</p>
                                 </>
                             )}
+
 
                         </div>
                         {modalData && (
@@ -145,14 +294,13 @@ export function SavedList() {
                         )}
 
                         {/* Dialog de confirmación */}
-                        {/* TODO: Ver si cambiar colores a los botones */}
-                        {/* <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+                        <Dialog open={dialogOpen} onClose={handleCloseDialog}>
                             <DialogTitle className='dialog'><span className='bold'>Confirmación</span></DialogTitle>
                             <DialogContent className='dialog'>
                                 <p>¿Estás seguro de que deseas eliminar esta ilustración?</p>
                             </DialogContent>
                             <DialogActions className='dialog'>
-                                
+
                                 <Button onClick={handleCloseDialog} variant="contained"
                                     sx={{
                                         backgroundColor: grey[700], // Color de fondo personalizado
@@ -176,7 +324,7 @@ export function SavedList() {
                                     Confirmar
                                 </Button>
                             </DialogActions>
-                        </Dialog> */}
+                        </Dialog>
                     </div>
 
                 </>
