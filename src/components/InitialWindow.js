@@ -10,7 +10,6 @@ import { obtenerUserDescifrado } from './Header';
 export function InitialWindow() {
   const user = obtenerUserDescifrado('user');
   const [modalData, setModalData] = useState(null);
-  const [ilustraciones, setIlustraciones] = useState([]);
   const [ilustracionesGuardadas, setIlustracionesGuardadas] = useState([]);
 
   // Estado para almacenar las ilustraciones mezcladas
@@ -97,28 +96,12 @@ export function InitialWindow() {
         });
 
         setIlustracionesGuardadas([...ilustracionesGuardadas, { ...ilustracion, propietario: userLocalStorage }]);
-
-        // Actualizar el estado local de la ilustración para reflejar el cambio de guardado
-        setIlustraciones(prevIlustraciones =>
-          prevIlustraciones.map(prevIlustracion =>
-            prevIlustracion.nombre === ilustracion.nombre
-              ? { ...prevIlustracion, guardado: true }
-              : prevIlustracion
-          )
-        );
+        
       } else {
         await axios.delete(`${apiUrl}/api/ilustration/guardados/eliminar/${ilustracion.nombre}/${userLocalStorage}`);
 
         setIlustracionesGuardadas(ilustracionesGuardadas.filter((item) => item.nombre !== ilustracion.nombre));
 
-        // Actualizar el estado local de la ilustración para reflejar el cambio de guardado
-        setIlustraciones(prevIlustraciones =>
-          prevIlustraciones.map(prevIlustracion =>
-            prevIlustracion.nombre === ilustracion.nombre
-              ? { ...prevIlustracion, guardado: false }
-              : prevIlustracion
-          )
-        );
       }
     } catch (error) {
       console.error('Error al actualizar el estado de guardado:', error);
