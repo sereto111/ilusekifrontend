@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Button from '@mui/material/Button';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { teal } from '@mui/material/colors';
 import { obtenerUserDescifrado } from './Header';
 
 export function InitialWindow() {
   const user = obtenerUserDescifrado('user');
   const [modalData, setModalData] = useState(null);
+  const [ilustraciones, setIlustraciones] = useState([]);
+  const [ilustracionesGuardadas, setIlustracionesGuardadas] = useState([]);
 
   // Estado para almacenar las ilustraciones mezcladas
   const [ilustracionesMezcladas, setIlustracionesMezcladas] = useState([]);
@@ -61,6 +67,64 @@ export function InitialWindow() {
     }
   };
 
+  const userLocalStorage = obtenerUserDescifrado('user');
+
+  useEffect(() => {
+    const fetchIlustracionesGuardadas = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/api/ilustration/guardados/listar`);
+        setIlustracionesGuardadas(response.data.guardados);
+      } catch (error) {
+        console.error('Error al obtener las ilustraciones guardadas:', error);
+      }
+    };
+
+    fetchIlustracionesGuardadas();
+  }, [apiUrl]);
+
+  const esPropietario = (imagen) => {
+    return ilustracionesGuardadas.some(ilustracion => ilustracion.nombre === imagen.nombre);
+  };
+
+  const handleToggleGuardado = async (event, ilustracion) => {
+    event.stopPropagation();
+
+    try {
+      if (!esPropietario(ilustracion)) {
+        await axios.post(`${apiUrl}/api/ilustration/guardados/agregar`, {
+          nombre: ilustracion.nombre,
+          propietario: userLocalStorage,
+        });
+
+        setIlustracionesGuardadas([...ilustracionesGuardadas, { ...ilustracion, propietario: userLocalStorage }]);
+
+        // Actualizar el estado local de la ilustración para reflejar el cambio de guardado
+        setIlustraciones(prevIlustraciones =>
+          prevIlustraciones.map(prevIlustracion =>
+            prevIlustracion.nombre === ilustracion.nombre
+              ? { ...prevIlustracion, guardado: true }
+              : prevIlustracion
+          )
+        );
+      } else {
+        await axios.delete(`${apiUrl}/api/ilustration/guardados/eliminar/${ilustracion.nombre}/${userLocalStorage}`);
+
+        setIlustracionesGuardadas(ilustracionesGuardadas.filter((item) => item.nombre !== ilustracion.nombre));
+
+        // Actualizar el estado local de la ilustración para reflejar el cambio de guardado
+        setIlustraciones(prevIlustraciones =>
+          prevIlustraciones.map(prevIlustracion =>
+            prevIlustracion.nombre === ilustracion.nombre
+              ? { ...prevIlustracion, guardado: false }
+              : prevIlustracion
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Error al actualizar el estado de guardado:', error);
+    }
+  };
+
   // Renderizar el componente
   return (
     /* TODO: Mirar si cambiar CSS para centrarlos o posicionarlos mejor */
@@ -73,6 +137,30 @@ export function InitialWindow() {
               <div className='div-border'>
                 <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
                 <p><span className='bold'>Autor: </span>{ilustracion.usuario}</p>
+                {/* Botón de guardado */}
+                <Button
+                  variant="contained"
+                  onClick={(event) => {
+                    // Evitar que se abra el modal
+                    event.stopPropagation();
+                    handleToggleGuardado(event, ilustracion);
+                  }}
+                  sx={{
+                    backgroundColor: teal[400],
+                    color: '#FFF',
+                    '&:hover': {
+                      backgroundColor: teal[700],
+                    },
+                  }}
+                >
+                  {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
+                  {esPropietario(ilustracion) ? (
+                    <BookmarkIcon />
+                  ) : (
+                    <BookmarkBorderIcon />
+                  )}
+                </Button>
+
               </div>
             </li>
           ))}
