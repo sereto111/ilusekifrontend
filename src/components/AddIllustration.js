@@ -1,4 +1,4 @@
-import React, { /* useRef ,*/ useState } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
 import { goInicio, obtenerUserDescifrado } from './Header';
 import Alert from '@mui/material/Alert';
-/* import Webcam from 'react-webcam'; */
+import Webcam from 'react-webcam';
 
 export function AddIllustration() {
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -23,11 +23,12 @@ export function AddIllustration() {
         },
     }));
 
-    /* const webcamRef = useRef(Webcam); */
+    const webcamRef = useRef(null);
     const [descripcion, setDescripcion] = useState('');
     const [imagen, setImagen] = useState(null);
     const [imagenPreview, setImagenPreview] = useState(null);
     const [showAlertToast, setShowAlertToast] = useState(false);
+    const [useRearCamera, setUseRearCamera] = useState(true);
 
     const handleImagenChange = e => {
         const file = e.target.files[0];
@@ -51,37 +52,24 @@ export function AddIllustration() {
         reader.readAsDataURL(file);
     };
 
-    /* const handleCaptureImage = async () => {
-        try {
+    const handleCaptureImage = async () => {
+        if (webcamRef.current) {
+            const imageData = webcamRef.current.getScreenshot();
 
-            //En caso de que no se encuentre cámara    
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                alert("No se ha podido acceder a la cámara");
+            if (imageData) {
+                const blob = dataURLtoBlob(imageData, "image/jpeg");
+                const file = new File([blob], "captured_image.jpg", { type: "image/jpeg" });
+
+                setImagen(file);
+
+                const reader = new FileReader();
+                reader.onload = () => {
+                    setImagenPreview(reader.result);
+                };
+                reader.readAsDataURL(blob);
             }
-
-            if (webcamRef.current) {
-                const imageData = webcamRef.current.getScreenshot();
-
-                if (imageData) {
-                    const blob = dataURLtoBlob(imageData, "image/jpeg");
-
-                    const file = new File([blob], "captured_image.jpg", { type: "image/jpeg" });
-
-                    const formData = new FormData();
-                    formData.append('image', file);
-                    formData.append('filename', file.name);
-                    formData.append('originalName', file.name);
-
-                    axios.post('http://localhost:5000/upload', formData)
-                        .then(response => {
-                            const imagePath = response.data.imagePath;                            
-                            setImagenUrl(imagePath);
-                        })
-                        .catch(error => { });
-                }
-            }
-        } catch (error) { }
-    }; 
+        }
+    };
 
     function dataURLtoBlob(dataURL, type) {
         const binaryString = window.atob(dataURL.split(',')[1]);
@@ -93,14 +81,13 @@ export function AddIllustration() {
         }
 
         return new Blob([uint8Array], { type });
-    };*/
+    };
 
     const handleButtonClick = async () => {
-        const formData = new FormData();        
+        const formData = new FormData();
         formData.append('descripcion', descripcion);
         formData.append('imagen', imagen); // Añade la imagen al objeto FormData
         formData.append('usuario', usuario); //Subido por:
-
 
         if (!imagen || !descripcion) {
             // Si falta alguno de los campos obligatorios, muestra un mensaje de error
@@ -121,7 +108,7 @@ export function AddIllustration() {
 
             } catch (error) {
                 setShowAlertToast(true);
-            } finally {                
+            } finally {
                 setImagen(null);
                 setImagenPreview(null);
                 setTimeout(() => {
@@ -129,9 +116,11 @@ export function AddIllustration() {
                 }, 2000); // Espera 2 segundos antes de ocultar el AlertToast
             };
         }
-
     };
 
+    const videoConstraints = {
+        facingMode: useRearCamera ? 'environment' : 'user',
+    };
 
     return (
         <>
@@ -149,8 +138,6 @@ export function AddIllustration() {
                     autoComplete="off"
                     style={{ minHeight: '100vh' }}
                 >
-                    
-                    {/* TODO: Quitar que sea obligatoria en el backend y poner una descripción por defecto en caso de vacía */}
                     <TextField className='register'
                         required
                         id="filled-multiline-flexible"
@@ -167,11 +154,19 @@ export function AddIllustration() {
                         onChange={handleImagenChange}
                         required
                     />
-                    {/* <Webcam
+                    <Webcam
                         audio={false}
                         ref={webcamRef}
+                        screenshotFormat="image/jpeg"
+                        videoConstraints={videoConstraints}
                     />
-                    <button type='button' onClick={handleCaptureImage}>Capturar imagen</button> */}
+                    <Button type='button' onClick={handleCaptureImage}>Capturar imagen</Button>
+                    <Button
+                        type='button'
+                        onClick={() => setUseRearCamera(prev => !prev)}
+                    >
+                        {useRearCamera ? 'Cambiar a cámara frontal' : 'Cambiar a cámara trasera'}
+                    </Button>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         {imagenPreview && <img src={imagenPreview} alt="previewImg" style={{ width: '200px' }} />}
                     </div>
@@ -183,7 +178,6 @@ export function AddIllustration() {
                         defaultValue={usuario}
                         disabled
                     />
-
                     <ColorButton variant="contained" onClick={handleButtonClick}>Añadir</ColorButton>
 
                     {showAlertToast && (
@@ -191,9 +185,8 @@ export function AddIllustration() {
                             No se han rellenado todos los campos obligatorios.
                         </Alert>
                     )}
-
                 </Stack>
             </Box>
         </>
-    )
+    );
 }
