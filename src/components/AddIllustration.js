@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -29,12 +29,26 @@ export function AddIllustration() {
     const [imagenPreview, setImagenPreview] = useState(null);
     const [showAlertToast, setShowAlertToast] = useState(false);
     const [useRearCamera, setUseRearCamera] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        // Detectar si el dispositivo es móvil
+        const checkIsMobile = () => {
+            setIsMobile(window.matchMedia("(max-width: 767px)").matches);
+        };
+
+        checkIsMobile();
+        window.addEventListener('resize', checkIsMobile);
+
+        return () => {
+            window.removeEventListener('resize', checkIsMobile);
+        };
+    }, []);
 
     const handleImagenChange = e => {
         const file = e.target.files[0];
 
         if (!file) {
-            // Si el usuario cancela la selección de archivo, no hay archivo seleccionado
             setImagen(null);
             setImagenPreview(null);
             return;
@@ -44,11 +58,9 @@ export function AddIllustration() {
 
         const reader = new FileReader();
         reader.onload = () => {
-            // Una vez que el archivo se ha leído, actualiza el estado `imagePreview` con la URL de datos
             setImagenPreview(reader.result);
         };
 
-        // Lee el archivo como una URL de datos
         reader.readAsDataURL(file);
     };
 
@@ -86,11 +98,10 @@ export function AddIllustration() {
     const handleButtonClick = async () => {
         const formData = new FormData();
         formData.append('descripcion', descripcion);
-        formData.append('imagen', imagen); // Añade la imagen al objeto FormData
-        formData.append('usuario', usuario); //Subido por:
+        formData.append('imagen', imagen);
+        formData.append('usuario', usuario);
 
         if (!imagen || !descripcion) {
-            // Si falta alguno de los campos obligatorios, muestra un mensaje de error
             setShowAlertToast(true);
             setTimeout(() => {
                 setShowAlertToast(false);
@@ -103,9 +114,7 @@ export function AddIllustration() {
                     },
                 });
 
-                //TODO: Ver si redirigir a perfil o dejar a inicio
-                goInicio(); //Ir a Inicio
-
+                goInicio();
             } catch (error) {
                 setShowAlertToast(true);
             } finally {
@@ -113,7 +122,7 @@ export function AddIllustration() {
                 setImagenPreview(null);
                 setTimeout(() => {
                     setShowAlertToast(false);
-                }, 2000); // Espera 2 segundos antes de ocultar el AlertToast
+                }, 2000);
             };
         }
     };
@@ -161,12 +170,14 @@ export function AddIllustration() {
                         videoConstraints={videoConstraints}
                     />
                     <Button type='button' onClick={handleCaptureImage}>Capturar imagen</Button>
-                    <Button
-                        type='button'
-                        onClick={() => setUseRearCamera(prev => !prev)}
-                    >
-                        {useRearCamera ? 'Cambiar a cámara frontal' : 'Cambiar a cámara trasera'}
-                    </Button>
+                    {isMobile && (
+                        <Button
+                            type='button'
+                            onClick={() => setUseRearCamera(prev => !prev)}
+                        >
+                            {useRearCamera ? 'Cambiar a cámara frontal' : 'Cambiar a cámara trasera'}
+                        </Button>
+                    )}
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         {imagenPreview && <img src={imagenPreview} alt="previewImg" style={{ width: '200px' }} />}
                     </div>
