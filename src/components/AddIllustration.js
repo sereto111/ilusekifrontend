@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import { pink } from '@mui/material/colors';
+import { pink, teal, deepOrange } from '@mui/material/colors';
 import { goInicio, obtenerUserDescifrado } from './Header';
 import Alert from '@mui/material/Alert';
 import Webcam from 'react-webcam';
@@ -23,6 +23,22 @@ export function AddIllustration() {
         },
     }));
 
+    const ColorButtonTwo = styled(Button)(({ theme }) => ({
+        color: theme.palette.getContrastText(teal[500]),
+        backgroundColor: teal[500],
+        '&:hover': {
+            backgroundColor: teal[700],
+        },
+    }));
+
+    const ColorButtonThree = styled(Button)(({ theme }) => ({
+        color: theme.palette.getContrastText(deepOrange[500]),
+        backgroundColor: deepOrange[500],
+        '&:hover': {
+            backgroundColor: deepOrange[700],
+        },
+    }));
+
     const webcamRef = useRef(null);
     const [descripcion, setDescripcion] = useState('');
     const [imagen, setImagen] = useState(null);
@@ -32,7 +48,7 @@ export function AddIllustration() {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        // Detectar si el dispositivo es móvil
+        // Detectar si el dispositivo es móvil (o tamaño móvil)
         const checkIsMobile = () => {
             setIsMobile(window.matchMedia("(max-width: 767px)").matches);
         };
@@ -169,14 +185,15 @@ export function AddIllustration() {
                         screenshotFormat="image/jpeg"
                         videoConstraints={videoConstraints}
                     />
-                    <Button type='button' onClick={handleCaptureImage}>Capturar imagen</Button>
+                    <ColorButtonTwo variant="contained" type='button' onClick={handleCaptureImage}>Capturar imagen</ColorButtonTwo>
                     {isMobile && (
-                        <Button
+                        <ColorButtonThree
+                            variant="contained"
                             type='button'
                             onClick={() => setUseRearCamera(prev => !prev)}
                         >
                             {useRearCamera ? 'Cambiar a cámara frontal' : 'Cambiar a cámara trasera'}
-                        </Button>
+                        </ColorButtonThree>
                     )}
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         {imagenPreview && <img src={imagenPreview} alt="previewImg" style={{ width: '200px' }} />}
