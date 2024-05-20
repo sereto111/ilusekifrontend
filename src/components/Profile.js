@@ -22,10 +22,10 @@ import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { pink, red, green, grey, teal } from '@mui/material/colors';
 import { goInicio, obtenerUserDescifrado, obtenerEmailDescifrado } from './Header';
-
-//TODO: Poner botón para ir a ruta upload | En Profile o Inicio
 
 export function Profile() {
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -33,6 +33,9 @@ export function Profile() {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedIlustracion, setSelectedIlustracion] = useState(null);
     const [ilustracionesGuardadas, setIlustracionesGuardadas] = useState([]);
+
+    //TODO: Poner en inicio, buscador y guardados
+    const [, setIlustracionesConMeGusta] = useState([]);
 
     function goAddIllustration() {
         window.open("/upload", "_self");
@@ -143,6 +146,42 @@ export function Profile() {
             console.error('Error al actualizar el estado de guardado:', error);
         }
     };
+
+    //TODO: Poner boton en inicio, buscador y guardados
+    //Likes
+    const handleToggleLike = async (event, ilustracion) => {
+        event.stopPropagation();
+
+        try {
+            if (!ilustracion.likes.includes(userLocalStorage)) {
+                await axios.post(`${apiUrl}/api/ilustration/me-gusta/${ilustracion.nombre}`, {
+                    usuario: userLocalStorage,
+                });
+
+                // Agregar el usuario actual a la lista de likes de la ilustración
+                ilustracion.likes.push(userLocalStorage);
+            } else {
+                await axios.post(`${apiUrl}/api/ilustration/eliminar-me-gusta/${ilustracion.nombre}`, {
+                    usuario: userLocalStorage,
+                });
+
+                // Quitar el usuario actual de la lista de likes de la ilustración
+                ilustracion.likes = ilustracion.likes.filter(user => user !== userLocalStorage);
+            }
+
+            // Actualizar el estado de las ilustraciones con los me gusta del usuario actual
+            setIlustracionesConMeGusta(prevIlustraciones =>
+                prevIlustraciones.map(prevIlustracion =>
+                    prevIlustracion.nombre === ilustracion.nombre
+                        ? { ...prevIlustracion, likes: ilustracion.likes }
+                        : prevIlustracion
+                )
+            );
+        } catch (error) {
+            console.error('Error al manejar el me gusta:', error);
+        }
+    };
+    //FIN Likes
 
     //Abrir y cerrar modal
     const handleOpenModal = (ilustracion) => {
@@ -276,7 +315,7 @@ export function Profile() {
 
                         </List>
                     </Box>
-                    {/* TODO: Añadir botón me gusta y guardados */}
+                    {/* TODO: Añadir botón me gusta */}
                     <div className="profile-container">
                         <h1>Ilustraciones de {user}</h1>
                         <div className="profile-grid-container">
@@ -331,6 +370,34 @@ export function Profile() {
                                             <BookmarkBorderIcon />
                                         )}
                                     </Button>
+                                    {/* TODO: Poner boton me gusta en inicio, buscador y guardados */}
+                                    {/* Botón de me gusta */}
+                                    <Button
+                                        variant="contained"
+                                        className={userLocalStorage === ilustracion.usuario ? 'third-button' : 'second-button'}
+                                        onClick={(event) => {
+                                            // Evitar que se abra el modal
+                                            event.stopPropagation();
+                                            handleToggleLike(event, ilustracion);
+                                        }}
+                                        sx={{
+                                            backgroundColor: pink[400],
+                                            color: '#FFF',
+                                            '&:hover': {
+                                                backgroundColor: pink[700],
+                                            },
+                                        }}
+                                    >
+                                        {/* Si el usuario ha dado me gusta, muestra el icono relleno, de lo contrario, muestra el icono hueco */}
+                                        {ilustracion.likes.includes(userLocalStorage) ? (
+                                            <FavoriteIcon />
+                                        ) : (
+                                            <FavoriteBorderIcon />
+                                        )}
+                                        {/* Contador de me gusta */}
+                                        <span>&nbsp;{ilustracion.likes.length}</span>
+                                    </Button>
+                                    {/* FIN boton me gusta */}
                                 </div>
 
                             ))}
