@@ -316,7 +316,7 @@ export function Profile() {
                     <div className="profile-container">
                         <h1>Ilustraciones de {user}</h1>
                         <div className="profile-grid-container">
-                            {ilustraciones.map((ilustracion) => (
+                            {ilustraciones.slice().reverse().map((ilustracion) => (
                                 <div key={ilustracion._id} className="profile-grid-item" onClick={() => handleOpenModal(ilustracion)}>
                                     <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
 
@@ -367,7 +367,7 @@ export function Profile() {
                                             <BookmarkBorderIcon />
                                         )}
                                     </Button>
-                                    
+
                                     {/* Botón de me gusta */}
                                     <Button
                                         variant="contained"
