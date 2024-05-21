@@ -7,7 +7,7 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
-/* import { goInicio } from './Header'; */
+import { goInicio } from './Header';
 
 export function Register() {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -50,7 +50,7 @@ export function Register() {
 
       setShowAlertSuccess(true);
       await delay(1500); // Espera de 1.5 segundos
-      /* goInicio(); */
+      goInicio();
       //TODO: Quitar
       setShowAlertSuccess(false);
     } catch (error) {
