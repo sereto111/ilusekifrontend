@@ -11,8 +11,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import CachedIcon from '@mui/icons-material/Cached';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { pink, red, green, grey, teal } from '@mui/material/colors';
 import { obtenerUserDescifrado, goSaved } from './Header';
 
