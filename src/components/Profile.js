@@ -319,82 +319,84 @@ export function Profile() {
                             {ilustraciones.slice().reverse().map((ilustracion) => (
                                 <div key={ilustracion._id} className="profile-grid-item" onClick={() => handleOpenModal(ilustracion)}>
                                     <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
+                                    <div>
+                                        {userLocalStorage === ilustracion.usuario && (
+                                            <>
+                                                {/* Botón de eliminar */}
+                                                <Button
+                                                    variant="contained"
+                                                    onClick={(event) => {
+                                                        // Evitar que se abra el modal
+                                                        event.stopPropagation();
 
-                                    {userLocalStorage === ilustracion.usuario && (
-                                        <div>
-                                            {/* Botón de eliminar */}
-                                            <Button
-                                                variant="contained"
-                                                onClick={(event) => {
-                                                    // Evitar que se abra el modal
-                                                    event.stopPropagation();
+                                                        handleOpenDialog(ilustracion);
+                                                    }}
+                                                    sx={{
+                                                        backgroundColor: red[600],
+                                                        color: '#FFF',
+                                                        '&:hover': {
+                                                            backgroundColor: red[900],
+                                                        },
+                                                    }}
+                                                >
+                                                    <DeleteIcon />
+                                                </Button>
+                                            </>
 
-                                                    handleOpenDialog(ilustracion);
-                                                }}
-                                                sx={{
-                                                    backgroundColor: red[600],
-                                                    color: '#FFF',
-                                                    '&:hover': {
-                                                        backgroundColor: red[900],
-                                                    },
-                                                }}
-                                            >
-                                                <DeleteIcon />
-                                            </Button>
-                                        </div>
-                                    )}
-                                    {/* Botón de guardado */}
-                                    <Button
-                                        variant="contained"
-                                        className={userLocalStorage === ilustracion.usuario ? 'second-button' : ''}
-                                        onClick={(event) => {
-                                            // Evitar que se abra el modal
-                                            event.stopPropagation();
-                                            handleToggleGuardado(event, ilustracion);
-                                        }}
-                                        sx={{
-                                            backgroundColor: teal[400],
-                                            color: '#FFF',
-                                            '&:hover': {
-                                                backgroundColor: teal[700],
-                                            },
-                                        }}
-                                    >
-                                        {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
-                                        {esPropietario(ilustracion) ? (
-                                            <BookmarkIcon />
-                                        ) : (
-                                            <BookmarkBorderIcon />
                                         )}
-                                    </Button>
+                                        {/* Botón de guardado */}
+                                        <Button
+                                            variant="contained"
+                                            className={userLocalStorage === ilustracion.usuario ? 'second-button' : ''}
+                                            onClick={(event) => {
+                                                // Evitar que se abra el modal
+                                                event.stopPropagation();
+                                                handleToggleGuardado(event, ilustracion);
+                                            }}
+                                            sx={{
+                                                backgroundColor: teal[400],
+                                                color: '#FFF',
+                                                '&:hover': {
+                                                    backgroundColor: teal[700],
+                                                },
+                                            }}
+                                        >
+                                            {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
+                                            {esPropietario(ilustracion) ? (
+                                                <BookmarkIcon />
+                                            ) : (
+                                                <BookmarkBorderIcon />
+                                            )}
+                                        </Button>
 
-                                    {/* Botón de me gusta */}
-                                    <Button
-                                        variant="contained"
-                                        className={userLocalStorage === ilustracion.usuario ? 'third-button' : 'second-button'}
-                                        onClick={(event) => {
-                                            // Evitar que se abra el modal
-                                            event.stopPropagation();
-                                            handleToggleLike(event, ilustracion);
-                                        }}
-                                        sx={{
-                                            backgroundColor: pink[400],
-                                            color: '#FFF',
-                                            '&:hover': {
-                                                backgroundColor: pink[700],
-                                            },
-                                        }}
-                                    >
-                                        {/* Si el usuario ha dado me gusta, muestra el icono relleno, de lo contrario, muestra el icono hueco */}
-                                        {ilustracion.likes.includes(userLocalStorage) ? (
-                                            <FavoriteIcon />
-                                        ) : (
-                                            <FavoriteBorderIcon />
-                                        )}
-                                        {/* Contador de me gusta */}
-                                        <span>&nbsp;{ilustracion.likes.length}</span>
-                                    </Button>
-                                    {/* FIN boton me gusta */}
+                                        {/* Botón de me gusta */}
+                                        <Button
+                                            variant="contained"
+                                            className={userLocalStorage === ilustracion.usuario ? 'third-button' : 'second-button'}
+                                            onClick={(event) => {
+                                                // Evitar que se abra el modal
+                                                event.stopPropagation();
+                                                handleToggleLike(event, ilustracion);
+                                            }}
+                                            sx={{
+                                                backgroundColor: pink[400],
+                                                color: '#FFF',
+                                                '&:hover': {
+                                                    backgroundColor: pink[700],
+                                                },
+                                            }}
+                                        >
+                                            {/* Si el usuario ha dado me gusta, muestra el icono relleno, de lo contrario, muestra el icono hueco */}
+                                            {ilustracion.likes.includes(userLocalStorage) ? (
+                                                <FavoriteIcon />
+                                            ) : (
+                                                <FavoriteBorderIcon />
+                                            )}
+                                            {/* Contador de me gusta */}
+                                            <span>&nbsp;{ilustracion.likes.length}</span>
+                                        </Button>
+                                        {/* FIN boton me gusta */}
+                                    </div>
                                 </div>
 
                             ))}
