@@ -34,7 +34,6 @@ export function Profile() {
     const [selectedIlustracion, setSelectedIlustracion] = useState(null);
     const [ilustracionesGuardadas, setIlustracionesGuardadas] = useState([]);
 
-    //TODO: Poner en inicio, buscador y guardados
     const [, setIlustracionesConMeGusta] = useState([]);
 
     function goAddIllustration() {
@@ -147,7 +146,6 @@ export function Profile() {
         }
     };
 
-    //TODO: Poner boton en inicio, buscador y guardados
     //Likes
     const handleToggleLike = async (event, ilustracion) => {
         event.stopPropagation();
@@ -315,7 +313,6 @@ export function Profile() {
 
                         </List>
                     </Box>
-                    {/* TODO: Añadir botón me gusta */}
                     <div className="profile-container">
                         <h1>Ilustraciones de {user}</h1>
                         <div className="profile-grid-container">
@@ -370,7 +367,7 @@ export function Profile() {
                                             <BookmarkBorderIcon />
                                         )}
                                     </Button>
-                                    {/* TODO: Poner boton me gusta en inicio, buscador y guardados */}
+                                    
                                     {/* Botón de me gusta */}
                                     <Button
                                         variant="contained"
