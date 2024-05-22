@@ -86,7 +86,7 @@
 
 .aboutTxt {
   margin: 20px;
-  text-align: justify;
+  text-align: justify; /* TODO: Centrar o dejar justificado */
 }
 
 .container {
@@ -402,13 +402,14 @@
     max-width: 80%;
     height: auto;
   }
-}
 
-@media (max-width: 600px) {
   .onlyBigScreen {
     display: none;
   }
+}
 
+@media (max-width: 600px) {
+  
   .home-item img {
     max-width: 90%;
     height: auto;
