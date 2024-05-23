@@ -503,12 +503,13 @@ export function Profile() {
 
                         <Dialog open={editDialogOpen} onClose={handleCloseEditDialog}>
                             <DialogTitle className='dialogEdit b-bt'><span className='bold'>Editar Descripción</span></DialogTitle>
-                            <DialogContent className='dialogEdit'>
+                            <DialogContent className='dialogEdit' >
                                 <br/>
                                 <TextField
                                     fullWidth
+                                    sx={{ width: '380px' }}
                                     multiline
-                                    className='custom-textfield'
+                                    className='custom-textfield-edit'
                                     rows={4}
                                     variant="outlined"
                                     value={newDescripcion}

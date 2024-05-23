@@ -152,9 +152,15 @@
   overflow-x: scroll;
 }
 
-.custom-textfield .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+.custom-textfield-edit .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: #FFF;
 }
+
+.custom-textfield-edit .MuiOutlinedInput-multiline {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 
 .custom-link,
 .custom-link:focus,
@@ -173,7 +179,7 @@
 }
 
 .dialogEdit {
-  background-color: #e57535;
+  background-color: #F4511E;
   color: #FFF;
 }
 
