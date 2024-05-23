@@ -158,7 +158,7 @@ export function InitialWindow() {
             <li key={ilustracion._id} className="home-item" onClick={() => handleOpenModal(ilustracion)}>
               <div className='div-border'>
                 <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
-                <p><span className='bold'>Autor: </span>{ilustracion.usuario}</p>                
+                <p><span className='bold'>Autor: </span>{ilustracion.usuario}</p>
                 {/* Botón de guardado */}
                 <Button
                   variant="contained"
@@ -224,7 +224,10 @@ export function InitialWindow() {
             {/* Enlace a la página de perfil con el usuario especificado */}
             <Link to={`/profile?usuario=${modalData.usuario}`} className='custom-link'><p className='big'><span className='bold'>Autor: </span>{modalData.usuario}</p></Link>
             <img src={modalData.imagen.secure_url} alt={modalData.nombre} />
-            <p>{modalData.descripcion}</p>
+            <p>{modalData.descripcion && modalData.descripcion.trim() !== ""
+              ? modalData.descripcion
+              : <span className='bold'>Imagen sin descripción</span>
+            }</p>
           </div>
         </div>
       )}

@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
+import TextField from '@mui/material/TextField';
 import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
@@ -24,15 +25,18 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { pink, red, green, grey, teal } from '@mui/material/colors';
+import EditIcon from '@mui/icons-material/Edit';
+import { pink, red, green, grey, teal, deepOrange } from '@mui/material/colors';
 import { goInicio, obtenerUserDescifrado, obtenerEmailDescifrado } from './Header';
 
 export function Profile() {
     const apiUrl = process.env.REACT_APP_API_URL;
 
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [selectedIlustracion, setSelectedIlustracion] = useState(null);
     const [ilustracionesGuardadas, setIlustracionesGuardadas] = useState([]);
+    const [newDescripcion, setNewDescripcion] = useState('');
 
     const [, setIlustracionesConMeGusta] = useState([]);
 
@@ -206,6 +210,37 @@ export function Profile() {
         setSelectedIlustracion(null);
     };
 
+    const handleOpenEditDialog = (ilustracion) => {
+        setSelectedIlustracion(ilustracion);
+        setNewDescripcion(ilustracion.descripcion || '');
+        setEditDialogOpen(true);
+    };
+
+    const handleCloseEditDialog = () => {
+        setEditDialogOpen(false);
+        setSelectedIlustracion(null);
+    };
+
+    const handleSaveDescripcion = async () => {
+        if (selectedIlustracion) {
+            try {
+                await axios.put(`${apiUrl}/api/ilustration/actualizarIlustracion/${selectedIlustracion.nombre}`, {
+                    descripcion: newDescripcion,
+                });
+                setIlustraciones(prevIlustraciones =>
+                    prevIlustraciones.map(prevIlustracion =>
+                        prevIlustracion.nombre === selectedIlustracion.nombre
+                            ? { ...prevIlustracion, descripcion: newDescripcion }
+                            : prevIlustracion
+                    )
+                );
+                handleCloseEditDialog();
+            } catch (error) {
+                console.error('Error al editar la descripción:', error);
+            }
+        }
+    };
+
     const handleConfirmDelete = async () => {
         if (selectedIlustracion) {
             try {
@@ -341,6 +376,26 @@ export function Profile() {
                                                 >
                                                     <DeleteIcon />
                                                 </Button>
+                                                {/* Botón de editar */}
+                                                <Button
+                                                    variant="contained"
+                                                    className='edit-button'
+                                                    onClick={(event) => {
+                                                        // Evitar que se abra el modal
+                                                        event.stopPropagation();
+
+                                                        handleOpenEditDialog(ilustracion)
+                                                    }}
+                                                    sx={{
+                                                        backgroundColor: deepOrange[600],
+                                                        color: '#FFF',
+                                                        '&:hover': {
+                                                            backgroundColor: deepOrange[900],
+                                                        },
+                                                    }}
+                                                >
+                                                    <EditIcon />
+                                                </Button>
                                             </>
 
                                         )}
@@ -406,25 +461,27 @@ export function Profile() {
                                 <div className="modal-content">
                                     <span className="close" onClick={handleCloseModal}>&times;</span>
                                     <img src={modalData.imagen.secure_url} alt={modalData.nombre} />
-                                    <p className='descOverflow'>{modalData.descripcion}</p>
+                                    <p className='descOverflow'>{modalData.descripcion && modalData.descripcion.trim() !== ""
+                                        ? modalData.descripcion
+                                        : <span className='bold'>Imagen sin descripción</span>
+                                    }</p>
                                 </div>
                             </div>
                         )}
 
                         {/* Dialog de confirmación */}
                         <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-                            <DialogTitle className='dialog'><span className='bold'>Confirmación</span></DialogTitle>
+                            <DialogTitle className='dialog b-bt'><span className='bold'>Confirmación</span></DialogTitle>
                             <DialogContent className='dialog'>
                                 <p>¿Estás seguro de que deseas eliminar esta ilustración?</p>
                             </DialogContent>
                             <DialogActions className='dialog'>
-                                {/* TODO: Ver si cambiar colores a los botones */}
                                 <Button onClick={handleCloseDialog} variant="contained"
                                     sx={{
-                                        backgroundColor: grey[700], // Color de fondo personalizado
-                                        color: '#FFF', // Color de texto (blanco)
+                                        backgroundColor: grey[700],
+                                        color: '#FFF',
                                         '&:hover': {
-                                            backgroundColor: grey[800], // Color de fondo en hover
+                                            backgroundColor: grey[800],
                                         },
                                     }}
                                 >
@@ -432,14 +489,65 @@ export function Profile() {
                                 </Button>
                                 <Button onClick={handleConfirmDelete} variant="contained"
                                     sx={{
-                                        backgroundColor: green[600], // Color de fondo personalizado
-                                        color: '#FFF', // Color de texto (blanco)
+                                        backgroundColor: green[600],
+                                        color: '#FFF',
                                         '&:hover': {
-                                            backgroundColor: green[800], // Color de fondo en hover
+                                            backgroundColor: green[800],
                                         },
                                     }}
                                 >
                                     Confirmar
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+
+                        <Dialog open={editDialogOpen} onClose={handleCloseEditDialog}>
+                            <DialogTitle className='dialogEdit b-bt'><span className='bold'>Editar Descripción</span></DialogTitle>
+                            <DialogContent className='dialogEdit'>
+                                <br/>
+                                <TextField
+                                    fullWidth
+                                    multiline
+                                    className='custom-textfield'
+                                    rows={4}
+                                    variant="outlined"
+                                    value={newDescripcion}
+                                    onChange={(e) => setNewDescripcion(e.target.value)}
+                                    placeholder="Descripción"
+                                    InputProps={{
+                                        style: {
+                                            color: '#FFF',
+                                        },
+                                    }}
+                                    InputLabelProps={{
+                                        style: {
+                                            color: '#FFF',
+                                        },
+                                    }}
+                                />
+                            </DialogContent>
+                            <DialogActions className='dialogEdit'>
+                                <Button onClick={handleCloseEditDialog} variant="contained"
+                                    sx={{
+                                        backgroundColor: grey[700],
+                                        color: '#FFF',
+                                        '&:hover': {
+                                            backgroundColor: grey[800],
+                                        },
+                                    }}
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button onClick={handleSaveDescripcion} variant="contained"
+                                    sx={{
+                                        backgroundColor: green[600],
+                                        color: '#FFF',
+                                        '&:hover': {
+                                            backgroundColor: green[800],
+                                        },
+                                    }}
+                                >
+                                    Guardar
                                 </Button>
                             </DialogActions>
                         </Dialog>

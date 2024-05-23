@@ -313,14 +313,17 @@ export function Buscador() {
                         <div className="modal-content">
                             <span className="close" onClick={handleCloseModal}>&times;</span>
                             <img src={modalData.imagen.secure_url} alt={modalData.nombre} />
-                            <p className='descOverflow'>{modalData.descripcion}</p>
+                            <p className='descOverflow'>{modalData.descripcion && modalData.descripcion.trim() !== ""
+                                ? modalData.descripcion
+                                : <span className='bold'>Imagen sin descripción</span>
+                            }</p>
                         </div>
                     </div>
                 )}
 
                 {/* Dialog de confirmación */}
                 <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-                    <DialogTitle className='dialog'><span className='bold'>Confirmación</span></DialogTitle>
+                    <DialogTitle className='dialog b-bt'><span className='bold'>Confirmación</span></DialogTitle>
                     <DialogContent className='dialog'>
                         <p>¿Estás seguro de que deseas eliminar esta ilustración?</p>
                     </DialogContent>

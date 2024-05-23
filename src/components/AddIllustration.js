@@ -117,7 +117,7 @@ export function AddIllustration() {
         formData.append('imagen', imagen);
         formData.append('usuario', usuario);
 
-        if (!imagen || !descripcion) {
+        if (!imagen) {
             setShowAlertToast(true);
             setTimeout(() => {
                 setShowAlertToast(false);
@@ -163,10 +163,9 @@ export function AddIllustration() {
                     autoComplete="off"
                     style={{ minHeight: '100vh' }}
                 >
-                    <TextField className='register'
-                        required
+                    <TextField className='register'                        
                         id="filled-multiline-flexible"
-                        label="Descripción"
+                        label="Descripción (Opcional)"
                         multiline
                         rows={4}
                         variant="filled"

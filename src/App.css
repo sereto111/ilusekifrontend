@@ -140,12 +140,20 @@
   font-weight: 700;
 }
 
+.b-bt {
+  border-bottom: #FFF 1px solid;
+}
+
 .big {
   font-size: xx-large;
 }
 
 .descOverflow {
   overflow-x: scroll;
+}
+
+.custom-textfield .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #FFF;
 }
 
 .custom-link,
@@ -161,6 +169,11 @@
 
 .dialog {
   background-color: #E53935;
+  color: #FFF;
+}
+
+.dialogEdit {
+  background-color: #e57535;
   color: #FFF;
 }
 
@@ -267,6 +280,16 @@
   position: absolute;
   bottom: 0;
   right: 139px;
+  padding: 5px;
+  margin-right: 5px;
+  margin-bottom: 3px;
+  box-sizing: border-box;
+}
+
+.profile-grid-item .edit-button {
+  position: absolute;
+  bottom: 0;
+  right: 325px;
   padding: 5px;
   margin-right: 5px;
   margin-bottom: 3px;
@@ -401,6 +424,10 @@
   .home-item img {
     max-width: 80%;
     height: auto;
+  }
+
+  .profile-grid-item .edit-button {    
+    right: 590px;    
   }
 
   .onlyBigScreen {
