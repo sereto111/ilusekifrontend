@@ -223,6 +223,13 @@ export function Profile() {
 
     const handleSaveDescripcion = async () => {
         if (selectedIlustracion) {
+            // Verifica si la nueva descripción es diferente de la actual
+            if (selectedIlustracion.descripcion === newDescripcion) {
+                // Cierra el diálogo sin hacer la petición
+                handleCloseEditDialog();
+                return;
+            }
+
             try {
                 await axios.put(`${apiUrl}/api/ilustration/actualizarIlustracion/${selectedIlustracion.nombre}`, {
                     descripcion: newDescripcion,
@@ -243,8 +250,16 @@ export function Profile() {
 
     const handleConfirmDelete = async () => {
         if (selectedIlustracion) {
+            // Verificar si la ilustración está en la lista de guardados y eliminarla si es así
+            if (esPropietario(selectedIlustracion)) {
+                await axios.delete(`${apiUrl}/api/ilustration/guardados/eliminar/${selectedIlustracion.nombre}/${userLocalStorage}`);
+
+            }
+            // Eliminar la ilustración seleccionada
             try {
                 await axios.delete(`${apiUrl}/api/ilustration/eliminarIlustracion/${selectedIlustracion.nombre}`);
+
+                // Cerrar el diálogo después de eliminar la ilustración
                 handleCloseDialog();
                 window.location.reload();
             } catch (error) {
@@ -504,7 +519,7 @@ export function Profile() {
                         <Dialog open={editDialogOpen} onClose={handleCloseEditDialog}>
                             <DialogTitle className='dialogEdit b-bt'><span className='bold'>Editar Descripción</span></DialogTitle>
                             <DialogContent className='dialogEdit' >
-                                <br/>
+                                <br />
                                 <TextField
                                     fullWidth
                                     sx={{ width: '380px' }}

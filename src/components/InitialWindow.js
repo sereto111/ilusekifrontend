@@ -224,7 +224,7 @@ export function InitialWindow() {
             {/* Enlace a la página de perfil con el usuario especificado */}
             <Link to={`/profile?usuario=${modalData.usuario}`} className='custom-link'><p className='big'><span className='bold'>Autor: </span>{modalData.usuario}</p></Link>
             <img src={modalData.imagen.secure_url} alt={modalData.nombre} />
-            <p>{modalData.descripcion && modalData.descripcion.trim() !== ""
+            <p className='descOverflow'>{modalData.descripcion && modalData.descripcion.trim() !== ""
               ? modalData.descripcion
               : <span className='bold'>Imagen sin descripción</span>
             }</p>

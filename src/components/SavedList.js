@@ -173,8 +173,6 @@ export function SavedList() {
                 // Eliminar la ilustración seleccionada
                 await axios.delete(`${apiUrl}/api/ilustration/eliminarIlustracion/${selectedIlustracion.nombre}`);
 
-
-
                 // Cerrar el diálogo después de eliminar la ilustración
                 handleCloseDialog();
 
