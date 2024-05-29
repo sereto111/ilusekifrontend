@@ -216,7 +216,7 @@ export function AddIllustration() {
                         onClick={handleCaptureImage}
                         sx={{
                             width: '100%',
-                            maxWidth: '200px',
+                            maxWidth: '250px',
                             margin: '0 auto',
                         }}>
                         Capturar imagen
@@ -230,7 +230,7 @@ export function AddIllustration() {
                             onClick={() => setUseRearCamera(prev => !prev)}
                             sx={{
                                 width: '100%',
-                                maxWidth: '200px',
+                                maxWidth: '250px',
                             }}
                         >
                             {useRearCamera ? 'Cambiar a cámara frontal' : 'Cambiar a cámara trasera'}
@@ -246,7 +246,7 @@ export function AddIllustration() {
                         onClick={handleButtonClick}
                         sx={{
                             width: '100%',
-                            maxWidth: '200px',
+                            maxWidth: '250px',
                             margin: '0 auto',                            
                         }}>
                         Añadir
