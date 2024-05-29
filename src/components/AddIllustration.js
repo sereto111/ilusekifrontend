@@ -143,10 +143,6 @@ export function AddIllustration() {
         }
     };
 
-    const videoConstraints = {
-        facingMode: useRearCamera ? 'environment' : 'user',
-    };
-
     return (
         <>
             <h1>Subir Ilustración</h1>
