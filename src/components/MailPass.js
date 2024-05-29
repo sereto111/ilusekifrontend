@@ -30,7 +30,7 @@ export function MailPass() {
     const [email, setEmail] = useState('');
 
     const enviarCorreoRecuperacion = async () => {
-        try {           
+        try {
             await axios.post(`${apiUrl}/api/correo/recuperar-pass`, {
                 email: email
             });
@@ -50,54 +50,58 @@ export function MailPass() {
         <>
             <h1>Recuperar contraseña</h1>
             <Box display="flex" justifyContent="center">
-                <Stack
-                    component="form"
-                    sx={{
-                        width: '25ch',
-                    }}
-                    direction="column"
-                    spacing={2}
-                    noValidate
-                    autoComplete="off"
-                    style={{ minHeight: '100vh' }}
-                >
-                    <TextField className='register'
-                        required
-                        id="outlined-required"
-                        label="Email"
-                        variant="filled"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        sx={{              
-                            '&:focus-within label': {
-                              color: '#C2185B',
-                            },
-                            '& .MuiFilledInput-underline:after': {
-                              borderBottomColor: '#C2185B',
-                            },
-                          }}
-                    />
-
-                    <ColorButton variant="contained" onClick={enviarCorreoRecuperacion}>Recuperar contraseña</ColorButton>
-
-                    <div className='center'>
+                <form style={{ width: '90%', maxWidth: '500px' }}>
+                    <Stack
+                        direction="column"
+                        spacing={2}
+                        noValidate
+                        autoComplete="off"
+                        style={{ minHeight: '100vh' }}
+                    >
+                        <TextField
+                            className='register'
+                            required
+                            id="outlined-required"
+                            label="Email"
+                            variant="filled"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            fullWidth
+                            sx={{
+                                '&:focus-within label': {
+                                    color: '#C2185B',
+                                },
+                                '& .MuiFilledInput-underline:after': {
+                                    borderBottomColor: '#C2185B',
+                                },
+                            }}
+                        />
+                        <Box display="flex" justifyContent="center">
+                            <ColorButton
+                                variant="contained"
+                                onClick={enviarCorreoRecuperacion}
+                                sx={{ width: '60%' }}
+                            >
+                                Recuperar contraseña
+                            </ColorButton>
+                        </Box>
                         {showAlertSuccess && (
-                            <Stack sx={{ width: '100%' }} spacing={2}>
-                                <Alert severity="success">Se le enviará un correo para cambiar la contraseña</Alert>
-                            </Stack>
+                            <Box display="flex" justifyContent="center">
+                                <Stack sx={{ width: '60%', maxWidth: '300px', margin: '0 auto' }} spacing={2}>
+                                    <Alert severity="success">Se le enviará un correo para cambiar la contraseña</Alert>
+                                </Stack>
+                            </Box>
                         )}
-                    </div>
-
-                    <div className='center'>
                         {showAlertError && (
-                            <Stack sx={{ width: '100%' }} spacing={2}>
-                                <Alert severity="error">Email no registrado</Alert>
-                            </Stack>
+                            <Box display="flex" justifyContent="center">
+                                <Stack sx={{ width: '60%', maxWidth: '300px', margin: '0 auto' }} spacing={2}>
+                                    <Alert severity="error">Email no registrado</Alert>
+                                </Stack>
+                            </Box>
                         )}
-                    </div>
-                </Stack>
+                    </Stack>
+                </form>
             </Box>
-
         </>
     )
 }

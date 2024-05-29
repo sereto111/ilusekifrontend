@@ -152,68 +152,117 @@ export function AddIllustration() {
             <h1>Subir Ilustración</h1>
 
             <Box display="flex" justifyContent="center">
-                <Stack
-                    component="form"
-                    sx={{
-                        width: '25ch',
-                    }}
-                    direction="column"
-                    spacing={2}
-                    noValidate
-                    autoComplete="off"
-                    style={{ minHeight: '100vh' }}
-                >
-                    <TextField className='register'                        
-                        id="filled-multiline-flexible"
-                        label="Descripción (Opcional)"
-                        multiline
-                        rows={4}
-                        variant="filled"
-                        value={descripcion}
-                        onChange={e => setDescripcion(e.target.value)}
-                    />
+            <Stack
+                component="form"
+                sx={{
+                    width: '60%',
+                }}
+                direction="column"
+                spacing={2}
+                noValidate
+                autoComplete="off"
+                style={{ minHeight: '100vh' }}
+            >
+                <TextField
+                    className='register'
+                    id="filled-multiline-flexible"
+                    label="Descripción (Opcional)"
+                    multiline
+                    rows={4}
+                    variant="filled"
+                    value={descripcion}
+                    onChange={e => setDescripcion(e.target.value)}
+                />
+                {/* TODO: Quitar si no se pone el TextField
+                <TextField
+                    className='register'
+                    required
+                    id="outlined-required"
+                    label="Subido por:"
+                    variant="filled"
+                    defaultValue={usuario}
+                    disabled
+                /> 
+                */}
+                <Box display="flex" justifyContent="center">
                     <input
                         type="file"
                         accept="image/*"
                         onChange={handleImagenChange}
                         required
+                        style={{
+                            width: '100%',
+                            maxWidth: '320px',
+                            margin: '0 auto',
+                        }}
                     />
-                    <Webcam
-                        audio={false}
-                        ref={webcamRef}
-                        screenshotFormat="image/jpeg"
-                        videoConstraints={videoConstraints}
-                    />
-                    <ColorButtonTwo variant="contained" type='button' onClick={handleCaptureImage}>Capturar imagen</ColorButtonTwo>
-                    {isMobile && (
+                </Box>
+                <br />
+                <Webcam
+                    audio={false}
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                    videoConstraints={{
+                        width: 320,
+                        height: 240,
+                        facingMode: useRearCamera ? "environment" : "user",
+                    }}
+                    style={{
+                        width: '100%',
+                        maxWidth: '320px',
+                        margin: '0 auto',
+                    }}
+                />
+                <Box display="flex" justifyContent="center">
+                    <ColorButtonTwo 
+                        variant="contained" 
+                        type='button' 
+                        onClick={handleCaptureImage}
+                        sx={{
+                            width: '100%',
+                            maxWidth: '200px',
+                            margin: '0 auto',
+                        }}>
+                        Capturar imagen
+                    </ColorButtonTwo>
+                </Box>
+                {isMobile && (
+                    <Box display="flex" justifyContent="center">
                         <ColorButtonThree
                             variant="contained"
                             type='button'
                             onClick={() => setUseRearCamera(prev => !prev)}
+                            sx={{
+                                width: '100%',
+                                maxWidth: '200px',
+                            }}
                         >
                             {useRearCamera ? 'Cambiar a cámara frontal' : 'Cambiar a cámara trasera'}
                         </ColorButtonThree>
-                    )}
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        {imagenPreview && <img src={imagenPreview} alt="previewImg" style={{ width: '200px' }} />}
-                    </div>
-                    <TextField className='register'
-                        required
-                        id="outlined-required"
-                        label="Subido por:"
-                        variant="filled"
-                        defaultValue={usuario}
-                        disabled
-                    />
-                    <ColorButton variant="contained" onClick={handleButtonClick}>Añadir</ColorButton>
-
-                    {showAlertToast && (
-                        <Alert severity="warning" sx={{ textAlign: 'center' }}>
-                            No se han rellenado todos los campos obligatorios.
-                        </Alert>
-                    )}
-                </Stack>
-            </Box>
+                    </Box>
+                )}
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    {imagenPreview && <img src={imagenPreview} alt="previewImg" style={{ width: '600px' }} />}
+                </div>                
+                <Box display="flex" justifyContent="center" paddingBottom="20px">
+                    <ColorButton 
+                        variant="contained" 
+                        onClick={handleButtonClick}
+                        sx={{
+                            width: '100%',
+                            maxWidth: '200px',
+                            margin: '0 auto',                            
+                        }}>
+                        Añadir
+                    </ColorButton>                    
+                </Box>
+                {showAlertToast && (
+                    <Alert severity="warning" sx={{ textAlign: 'center' }}>
+                        No se han rellenado todos los campos obligatorios.
+                    </Alert>
+                )}
+            </Stack>
+        </Box>
         </>
     );
 }

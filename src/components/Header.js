@@ -45,16 +45,16 @@ export function goSaved() {
   window.open("/saved", "_self");
 }
 
+export function goLogin() {
+  window.open("/login", "_self");
+}
+
 function goBuscador() {
   window.open("/search", "_self");
 }
 
 function goRegister() {
   window.open("/register", "_self");
-}
-
-function goLogin() {
-  window.open("/login", "_self");
 }
 
 function goAbout() {

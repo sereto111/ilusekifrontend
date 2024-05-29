@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
 import axios from 'axios';
+import { goLogin } from './Header';
 
 const ResetPass = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -39,6 +40,8 @@ const ResetPass = () => {
         password: password
       });
       setShowAlertSuccess(true);
+      await delay(2000);
+      goLogin();
 
     } catch (error) {
       setShowAlertError(true);
@@ -51,40 +54,37 @@ const ResetPass = () => {
     <div>
       <h1>Restablecer contraseña</h1>
       <Box display="flex" justifyContent="center">
-        
-          <form onSubmit={handleSubmit}>
-            
-            <TextField className='register'
-              required
-              id="outlined-required"
-              label="Nueva Contraseña"
-              type="password"
-              variant="filled"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <br /><br />
-            <ColorButton type="submit" variant="contained" >Cambiar contraseña</ColorButton>
-            <br /><br />
-            <div className='center'>
-              {showAlertSuccess && (
-                <Stack sx={{ width: '100%' }} spacing={2}>
-                  <Alert severity="success">Contraseña cambiada con éxito | Puede cerrar esta pestaña</Alert>
-                </Stack>
-              )}
-            </div>
-            <br />
-            <div className='center'>
-              {showAlertError && (
-                <Stack sx={{ width: '100%' }} spacing={2}>
-                  <Alert severity="error">El enlace a caducado o ya se ha cambiado la contraseña</Alert>
-                </Stack>
-              )}
-            </div>
-
-          </form>
-       
-
+        <form onSubmit={handleSubmit} style={{ width: '90%', maxWidth: '500px' }}>
+          <TextField
+            className='register'
+            required
+            id="outlined-required"
+            label="Nueva Contraseña"
+            type="password"
+            variant="filled"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <ColorButton
+            type="submit"
+            variant="contained"
+            sx={{ width: '60%' }}
+          >
+            Cambiar contraseña
+          </ColorButton>
+          {showAlertSuccess && (
+            <Stack sx={{ width: '60%', maxWidth: '300px', margin: '0 auto', mt: 2 }} spacing={2}>
+              <Alert severity="success">Contraseña cambiada con éxito | Redirigiendo...</Alert>
+            </Stack>
+          )}
+          {showAlertError && (
+            <Stack sx={{ width: '60%', maxWidth: '300px', margin: '0 auto', mt: 2 }} spacing={2}>
+              <Alert severity="error">El enlace ha caducado o ya se ha cambiado la contraseña</Alert>
+            </Stack>
+          )}
+        </form>
       </Box>
     </div>
 

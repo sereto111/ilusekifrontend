@@ -119,7 +119,7 @@ export function Login() {
             <Stack
               component="form"
               sx={{
-                width: '25ch',
+                width: '40%',
               }}
               direction="column"
               spacing={2}
@@ -162,18 +162,28 @@ export function Login() {
               <Link to="#" onClick={goMailPass} color="#C2185B" underline="hover">
                 <b>{'Recuperar contraseña'}</b>
               </Link>
-              <ColorButton variant="contained" onClick={handleButtonClick}>Iniciar sesión</ColorButton>
+              <Box display="flex" justifyContent="center">
+                <ColorButton variant="contained" onClick={handleButtonClick}
+                  sx={{
+                    width: '100%',
+                    maxWidth: '200px',
+                    margin: '0 auto',
+                  }}>
+                  Iniciar sesión
+                </ColorButton>
+              </Box>
               <div className='center'>
                 {showAlertSuccess && (
-                  <Stack sx={{ width: '100%' }} spacing={2}>
+                  <Stack sx={{ width: '100%', maxWidth: '300px', margin: '0 auto' }} spacing={2}>
                     <Alert severity="success">Inicio de sesión correcto</Alert>
                   </Stack>
                 )}
               </div>
 
+
               <div className='center'>
                 {showAlertError && (
-                  <Stack sx={{ width: '100%' }} spacing={2}>
+                  <Stack sx={{ width: '100%', maxWidth: '300px', margin: '0 auto' }} spacing={2}>
                     <Alert severity="error">Inicio de sesión fallido</Alert>
                   </Stack>
                 )}

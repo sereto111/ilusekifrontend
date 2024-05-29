@@ -77,7 +77,7 @@ export function Register() {
         <Stack
           component="form"
           sx={{
-            width: '25ch',
+            width: '40%',
           }}
           direction="column"
           spacing={2}
@@ -93,7 +93,7 @@ export function Register() {
             variant="filled"
             value={nombre}
             onChange={e => setNombre(e.target.value)}
-            sx={{              
+            sx={{
               '&:focus-within label': {
                 color: '#C2185B',
               },
@@ -109,7 +109,7 @@ export function Register() {
             variant="filled"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            sx={{              
+            sx={{
               '&:focus-within label': {
                 color: '#C2185B',
               },
@@ -127,7 +127,7 @@ export function Register() {
             autoComplete="current-password"
             value={password}
             onChange={e => setPassword(e.target.value)}
-            sx={{              
+            sx={{
               '&:focus-within label': {
                 color: '#C2185B',
               },
@@ -136,10 +136,19 @@ export function Register() {
               },
             }}
           />
-          <ColorButton variant="contained" onClick={handleButtonClick}>Registrar</ColorButton>
+          <Box display="flex" justifyContent="center">
+            <ColorButton variant="contained" onClick={handleButtonClick}
+              sx={{
+                width: '100%',
+                maxWidth: '200px',
+                margin: '0 auto',
+              }}>
+              Registrar
+            </ColorButton>
+          </Box>
           <div className='center'>
             {showAlertSuccess && (
-              <Stack sx={{ width: '100%' }} spacing={2}>
+              <Stack sx={{ width: '100%', maxWidth: '300px', margin: '0 auto' }} spacing={2}>
                 <Alert severity="success">Registrado correctamente</Alert>
               </Stack>
             )}
@@ -147,7 +156,7 @@ export function Register() {
 
           <div className='center'>
             {showAlertError && (
-              <Stack sx={{ width: '100%' }} spacing={2}>
+              <Stack sx={{ width: '100%', maxWidth: '300px', margin: '0 auto' }} spacing={2}>
                 {errors.mensaje.nombre && (
                   <Alert severity="warning">Registro fallido: {errors.mensaje.nombre.msg}</Alert>
                 )}
