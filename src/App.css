@@ -377,9 +377,14 @@
 
   .profile-grid-item {
     width: 99%;
-    height: 99%;
-    object-fit: cover;
+    height: auto;
     position: relative;
+  }
+
+  .profile-grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .home-item img {
@@ -387,7 +392,7 @@
     height: auto;
   }
 
-  .prof button {    
+  .profile-grid-item button {    
     max-width: auto;
     height: 80%;
   }
@@ -396,7 +401,7 @@
     right: 208px;
   }
 
-  .profile-grid-item div {
+  .profile-grid-item .d {
     position: absolute;
     bottom: 0;
     left: 0;

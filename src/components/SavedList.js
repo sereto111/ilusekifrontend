@@ -215,56 +215,57 @@ export function SavedList() {
                             {ilustraciones.length > 0 ? (
                                 // Renderiza las ilustraciones guardadas
                                 ilustraciones.map((ilustracion) => (
-                                    <div key={ilustracion._id} className="profile-grid-item" onClick={() => handleOpenModal(ilustracion)}>
+                                    <div key={ilustracion._id} className="profile-grid-item save" onClick={() => handleOpenModal(ilustracion)}>
                                         <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
+                                        <div className='d'>
+                                            {userLocalStorage === ilustracion.usuario && (
+                                                <div>
+                                                    {/* Botón de eliminar */}
+                                                    <Button
+                                                        variant="contained"
+                                                        onClick={(event) => {
+                                                            // Evitar que se abra el modal
+                                                            event.stopPropagation();
 
-                                        {userLocalStorage === ilustracion.usuario && (
-                                            <div>
-                                                {/* Botón de eliminar */}
-                                                <Button
-                                                    variant="contained"
-                                                    onClick={(event) => {
-                                                        // Evitar que se abra el modal
-                                                        event.stopPropagation();
-
-                                                        handleOpenDialog(ilustracion);
-                                                    }}
-                                                    sx={{
-                                                        backgroundColor: red[600],
-                                                        color: '#FFF',
-                                                        '&:hover': {
-                                                            backgroundColor: red[900],
-                                                        },
-                                                    }}
-                                                >
-                                                    <DeleteIcon />
-                                                </Button>
-                                            </div>
-                                        )}
-                                        {/* Botón de guardado */}
-                                        <Button
-                                            variant="contained"
-                                            className={userLocalStorage === ilustracion.usuario ? 'second-button' : ''}
-                                            onClick={(event) => {
-                                                // Evitar que se abra el modal
-                                                event.stopPropagation();
-                                                handleToggleGuardado(event, ilustracion);
-                                            }}
-                                            sx={{
-                                                backgroundColor: teal[400],
-                                                color: '#FFF',
-                                                '&:hover': {
-                                                    backgroundColor: teal[700],
-                                                },
-                                            }}
-                                        >
-                                            {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
-                                            {esPropietario(ilustracion) ? (
-                                                <BookmarkIcon />
-                                            ) : (
-                                                <BookmarkBorderIcon />
+                                                            handleOpenDialog(ilustracion);
+                                                        }}
+                                                        sx={{
+                                                            backgroundColor: red[600],
+                                                            color: '#FFF',
+                                                            '&:hover': {
+                                                                backgroundColor: red[900],
+                                                            },
+                                                        }}
+                                                    >
+                                                        <DeleteIcon />
+                                                    </Button>
+                                                </div>
                                             )}
-                                        </Button>
+                                            {/* Botón de guardado */}
+                                            <Button
+                                                variant="contained"
+                                                className={userLocalStorage === ilustracion.usuario ? 'second-button' : ''}
+                                                onClick={(event) => {
+                                                    // Evitar que se abra el modal
+                                                    event.stopPropagation();
+                                                    handleToggleGuardado(event, ilustracion);
+                                                }}
+                                                sx={{
+                                                    backgroundColor: teal[400],
+                                                    color: '#FFF',
+                                                    '&:hover': {
+                                                        backgroundColor: teal[700],
+                                                    },
+                                                }}
+                                            >
+                                                {/* Si está en su lista de guardados sale el icono relleno, si no, sale el icono hueco */}
+                                                {esPropietario(ilustracion) ? (
+                                                    <BookmarkIcon />
+                                                ) : (
+                                                    <BookmarkBorderIcon />
+                                                )}
+                                            </Button>
+                                        </div>
                                     </div>
 
                                 ))
