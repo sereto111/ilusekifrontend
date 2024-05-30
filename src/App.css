@@ -64,7 +64,8 @@
 
 .aboutTxt {
   margin: 20px;
-  text-align: justify; /* TODO: Centrar o dejar justificado */
+  text-align: justify;
+  /* TODO: Centrar o dejar justificado */
 }
 
 .container {
@@ -152,8 +153,10 @@
 .home-container ul {
   display: flex;
   justify-content: center;
-  flex-direction: column;  /* Organización vertical de elementos */
-  list-style: none;  /* Quita la decoración de lista */
+  flex-direction: column;
+  /* Organización vertical de elementos */
+  list-style: none;
+  /* Quita la decoración de lista */
   padding: 0;
   margin: 0;
 }
@@ -209,7 +212,7 @@
   color: #fff;
   padding: 20px;
   margin: 0;
-  box-sizing: border-box;  
+  box-sizing: border-box;
 }
 
 .profile-grid-item button {
@@ -218,7 +221,7 @@
   right: 0;
   padding: 5px;
   margin-right: 5px;
-  margin-bottom: 3px;  
+  margin-bottom: 3px;
   box-sizing: border-box;
 }
 
@@ -252,7 +255,7 @@
   box-sizing: border-box;
 }
 
-.profile-grid-item .second-button span{
+.profile-grid-item .second-button span {
   bottom: 0;
   right: 70px;
   margin-right: 5px;
@@ -263,7 +266,7 @@
   box-sizing: border-box;
 }
 
-.profile-grid-item .third-button span{
+.profile-grid-item .third-button span {
   bottom: 0;
   right: 139px;
   margin-right: 5px;
@@ -373,8 +376,10 @@
   }
 
   .profile-grid-item {
-    width: 665px;
-    height: 665px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
   }
 
   .home-item img {
@@ -382,8 +387,35 @@
     height: auto;
   }
 
-  .profile-grid-item .edit-button {    
-    right: 590px;    
+  .profile-grid-item button {    
+    max-width: auto;
+    height: 80%;
+  }
+
+  .profile-grid-item .edit-button {
+    right: 208px;
+  }
+
+  .profile-grid-item div {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 15px;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .button-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .button-row + .button-row {
+    margin-top: 10px;
   }
 
   .onlyBigScreen {
@@ -392,7 +424,7 @@
 }
 
 @media (max-width: 600px) {
-  
+
   .home-item img {
     max-width: 90%;
     height: auto;
