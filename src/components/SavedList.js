@@ -219,7 +219,7 @@ export function SavedList() {
                                         <img src={ilustracion.imagen.secure_url} alt={ilustracion.nombre} />
                                         <div className='d'>
                                             {userLocalStorage === ilustracion.usuario && (
-                                                <div>
+                                                <>
                                                     {/* Botón de eliminar */}
                                                     <Button
                                                         variant="contained"
@@ -239,7 +239,7 @@ export function SavedList() {
                                                     >
                                                         <DeleteIcon />
                                                     </Button>
-                                                </div>
+                                                </>
                                             )}
                                             {/* Botón de guardado */}
                                             <Button
