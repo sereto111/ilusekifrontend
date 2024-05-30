@@ -145,7 +145,7 @@ export default function Header() {
   return (
     <>
 
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Container maxWidth="auto" sx={{ bgcolor: "#1a1a1a" }}>
           <Toolbar disableGutters>
             <PhotoLibraryIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -331,6 +331,8 @@ export default function Header() {
           </Toolbar>
         </Container>
       </AppBar>
+
+      <div className="app-bar-placeholder"></div>
     </>
   );
 }
