@@ -376,8 +376,8 @@
   }
 
   .profile-grid-item {
-    width: 100%;
-    height: 100%;
+    width: 99%;
+    height: 99%;
     object-fit: cover;
     position: relative;
   }
@@ -406,16 +406,6 @@
     padding: 15px;
     margin: 0;
     box-sizing: border-box;
-  }
-
-  .button-row {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .button-row + .button-row {
-    margin-top: 10px;
   }
 
   .onlyBigScreen {
