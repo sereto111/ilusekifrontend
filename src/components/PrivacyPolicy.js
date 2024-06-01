@@ -21,10 +21,7 @@ export function PrivacyPolicy() {
 
                 <ul>
                     <li>Personalizar la experiencia del Usuario y responder a sus necesidades individuales.</li>
-                    <li>Mejorar nuestro Sitio Web y brindar un servicio más personalizado.</li>
-                    <li>Enviar correos electrónicos periódicos.</li>
-                    <li>Procesar transacciones.</li>
-                    <li>Administrar una promoción, encuesta u otro sitio.</li>
+                    <li>Mejorar nuestro Sitio Web y brindar un servicio más personalizado.</li>                    
                 </ul>
 
                 <h2>3. Protección de la información</h2>
