@@ -9,7 +9,7 @@ export function PrivacyPolicy() {
             <h1>Política de Privacidad</h1>
 
             <div className='aboutTxt spaceB'>
-                <p>Esta Política de Privacidad describe cómo IluSeki recopila, utiliza y comparte la información personal de los usuarios de nuestro sitio web <a className='policyLink' href='https://iluseki.netlify.app' target='_blank'>https://iluseki.netlify.app</a></p>
+                <p>Esta Política de Privacidad describe cómo IluSeki recopila, utiliza y comparte la información personal de los usuarios de nuestro sitio web <a className='policyLink' href='https://iluseki.netlify.app' target='_blank' rel='noopener noreferrer'>https://iluseki.netlify.app</a></p>
 
                 <h2>1. Información que recopilamos</h2>
 
