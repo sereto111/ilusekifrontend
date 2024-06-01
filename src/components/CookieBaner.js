@@ -9,24 +9,18 @@ const CookieBanner = () => {
         console.log("Cookies aceptadas!");
         // Añadir cookie de analíticas
         Cookies.set('analyticsCookie', 'true', { expires: 365 });
-        // Inicializa aquí tus scripts de analíticas
-        initAnalytics();
+        // Enviar evento a Google Analytics
+        window.gtag('event', 'cookie_accepted', {
+            'event_category': 'Cookie Consent',
+            'event_label': 'Cookies Aceptadas',
+            'value': 1
+        });
     };
 
     const handleDeclineCookies = () => {
         console.log("Cookies rechazadas!");
         // Eliminar cookie de analíticas si existía
         Cookies.remove('analyticsCookie');
-    };
-
-    const initAnalytics = () => {
-        // Aquí puedes inicializar tus scripts de analíticas (por ejemplo, Google Analytics)
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0CGVTKRZ4H"></script>
-        // Esto es un ejemplo de inicialización de Google Analytics
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { window.dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-0CGVTKRZ4H');
     };
 
     return (
