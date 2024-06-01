@@ -21,13 +21,14 @@ const CookieBanner = () => {
 
     const initAnalytics = () => {
         // Aquí puedes inicializar tus scripts de analíticas (por ejemplo, Google Analytics)
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0CGVTKRZ4H"></script>
         // Esto es un ejemplo de inicialización de Google Analytics
         window.dataLayer = window.dataLayer || [];
         function gtag() { window.dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-0CGVTKRZ4H');
     };
-    
+
     return (
         <CookieConsent
             location="bottom"
