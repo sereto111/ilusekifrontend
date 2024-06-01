@@ -6,8 +6,7 @@ import Typography from '@mui/material/Typography';
 
 const CookieBanner = () => {
     const handleAcceptCookies = () => {
-        console.log("Cookies aceptadas!");
-        // Añadir cookie de analíticas
+        // Añadir cookie de análisis
         Cookies.set('analyticsCookie', 'true', { expires: 365 });
         // Enviar evento a Google Analytics
         window.gtag('event', 'cookie_accepted', {
@@ -18,8 +17,7 @@ const CookieBanner = () => {
     };
 
     const handleDeclineCookies = () => {
-        console.log("Cookies rechazadas!");
-        // Eliminar cookie de analíticas si existía
+        // Eliminar cookie de análisis si existía
         Cookies.remove('analyticsCookie');
     };
 
@@ -32,14 +30,14 @@ const CookieBanner = () => {
             cookieName="userAcceptedCookies"
             onAccept={handleAcceptCookies}
             onDecline={handleDeclineCookies}
-            style={{ background: "#2B373B", color: "white" }}
-            buttonStyle={{ color: "#4e503b", fontSize: "13px", background: "#f5b942", borderRadius: "5px" }}
-            declineButtonStyle={{ color: "#fff", fontSize: "13px", background: "#c94c4c", borderRadius: "5px" }}
+            style={{ background: "#1A1A1A", color: "#FFF" }}
+            buttonStyle={{ color: "#FFF", fontSize: "13px", background: "#368B3A", borderRadius: "5px", display: 'flex', width: '90px', fontWeight: 600 }}
+            declineButtonStyle={{ color: "#FFF", fontSize: "13px", background: "#E53935", borderRadius: "5px", display: 'flex', width: '90px', fontWeight: 600 }}
         >
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="body1" sx={{ flexGrow: 1 }}>
+                <Typography variant="body1" sx={{ flexGrow: 1, fontWeight: 600 }}>
                     Utilizamos cookies para mejorar su experiencia en nuestro sitio web.{' '}
-                    <a href="/privacy-policy" style={{ color: "#f5b942" }}>
+                    <a href="/privacy-policy" style={{ color: "#C22747" }}>
                         Leer más
                     </a>
                 </Typography>
@@ -49,5 +47,3 @@ const CookieBanner = () => {
 };
 
 export default CookieBanner;
-
-//G-0CGVTKRZ4H

@@ -65,7 +65,16 @@
 .aboutTxt {
   margin: 20px;
   text-align: justify;
-  /* TODO: Centrar o dejar justificado */
+}
+
+.spaceB {
+  padding-bottom: 100px;
+}
+
+
+.policyLink {
+  color: #C2185B;
+  text-decoration: none;
 }
 
 .container {

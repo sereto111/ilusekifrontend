@@ -11,6 +11,7 @@ import { Profile } from './Profile';
 import { MailPass } from './MailPass';
 import { AddIllustration } from './AddIllustration';
 import { Buscador } from './Buscador';
+import { PrivacyPolicy } from './PrivacyPolicy';
 
 export const Ruta = () => {
     return (
@@ -27,6 +28,7 @@ export const Ruta = () => {
                     <Route exact path='/profile' element={<Profile />}></Route>
                     <Route exact path='/mail-pass' element={<MailPass />}></Route>
                     <Route exact path='/reset-pass' element={<ResetPass />}></Route>
+                    <Route exact path='/privacy-policy' element={<PrivacyPolicy />}></Route>
                     <Route exact path='/error' element={<Error />}></Route>
                     <Route path='*' element={<Error />} />
                 </Routes>
