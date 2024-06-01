@@ -36,7 +36,7 @@ const CookieBanner = () => {
         >
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography variant="body1" sx={{ flexGrow: 1, fontWeight: 600 }}>
-                    Utilizamos cookies para mejorar su experiencia en nuestro sitio web.{' '}
+                    Utilizamos cookies para mejorar su experiencia en nuestro sitio web.<br/>{' '}
                     <a href="/privacy-policy" style={{ color: "#C22747" }}>
                         Leer más
                     </a>
