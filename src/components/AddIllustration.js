@@ -168,6 +168,14 @@ export function AddIllustration() {
                     variant="filled"
                     value={descripcion}
                     onChange={e => setDescripcion(e.target.value)}
+                    sx={{
+                        '&:focus-within label': {
+                          color: '#C2185B',
+                        },
+                        '& .MuiFilledInput-underline:after': {
+                          borderBottomColor: '#C2185B',
+                        }
+                      }}
                 />
                 {/* TODO: Quitar si no se pone el TextField
                 <TextField
