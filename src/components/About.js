@@ -1,11 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Fab from '@mui/material/Fab';
 import CachedIcon from '@mui/icons-material/Cached';
 import Spline from '@splinetool/react-spline';
+import { styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
+import { Box, Button, TextField, Typography, Container, Alert } from '@mui/material';
 
 export function About() {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [splinesLoaded, setSplinesLoaded] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState('');
+
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(pink[700]),
+    backgroundColor: pink[700],
+    '&:hover': {
+      backgroundColor: pink[900],
+    },
+  }));
 
   function goAbout() {
     window.open("/about", "_self");
@@ -16,6 +34,45 @@ export function About() {
       setSplinesLoaded(true);
     }, 100);
   }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setFormStatus('');
+
+    try {
+      const response = await axios.post(`${apiUrl}/api/correo/send`, {
+        name,
+        email,
+        message,
+      });
+
+      if (response.status === 200) {
+        setFormStatus('success');
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      setFormStatus('error');
+    }
+
+    setIsSubmitting(false);
+  };
+
+  const getAlertSeverity = () => {
+    if (formStatus === 'success') return 'success';
+    if (formStatus === 'error') return 'error';
+    return 'info';
+  };
+
+  const getAlertMessage = () => {
+    if (formStatus === 'success') return 'Mensaje enviado con éxito';
+    if (formStatus === 'error') return 'Error al enviar el mensaje. Inténtalo de nuevo más tarde.';
+    return '';
+  };
 
   return (
     <>
@@ -45,9 +102,7 @@ export function About() {
         {splinesLoaded ? (
           <>
             <Spline scene="https://prod.spline.design/FcuklIi1EMHY8M2Q/scene.splinecode" style={{ width: '700px', height: '500px', backgroundColor: 'transparent' }} alt='keyboardModel' className='onlyBigScreen' />
-
             <img src='https://res.cloudinary.com/dmsqsogtj/image/upload/v1716403329/ilusekiFront/assets/sxnbjjgv28gffqsznrgt.jpg' height='500px' width='auto' alt='imagen acerca del sitio' />
-
             <Spline scene="https://prod.spline.design/GjMnrkFMmc8JNAEe/scene.splinecode" style={{ width: '700px', height: '500px', backgroundColor: 'transparent' }} alt='controllerModel' className='onlyBigScreen' />
           </>
         ) : (
@@ -62,6 +117,77 @@ export function About() {
         <br /><br />
         &#x1F58D;&#xFE0F; Lorem ipsum dolor sit amet consectetur adipiscing elit ornare aliquam quis, quam pharetra metus dictum sagittis nisl torquent potenti habitant.
       </p>
+
+      <Container maxWidth="sm">
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 8, pb: 5 }}>
+          <h2>Contáctanos</h2>
+          <TextField
+            label="Nombre"
+            fullWidth
+            variant="filled"
+            margin="normal"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className='register'
+            sx={{
+              '&:focus-within label': {
+                color: '#C2185B',
+              },
+              '& .MuiFilledInput-underline:after': {
+                borderBottomColor: '#C2185B',
+              }
+            }}
+            required
+          />
+          <TextField
+            label="Email"
+            type="email"
+            fullWidth
+            variant="filled"
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className='register'
+            sx={{
+              '&:focus-within label': {
+                color: '#C2185B',
+              },
+              '& .MuiFilledInput-underline:after': {
+                borderBottomColor: '#C2185B',
+              }
+            }}
+            required
+          />
+          <TextField
+            label="Mensaje"
+            fullWidth
+            variant="filled"
+            margin="normal"
+            multiline
+            rows={4}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className='register'
+            sx={{
+              '&:focus-within label': {
+                color: '#C2185B',
+              },
+              '& .MuiFilledInput-underline:after': {
+                borderBottomColor: '#C2185B',
+              }
+            }}
+            required
+          />
+          {formStatus && (
+            <Alert severity={getAlertSeverity()} sx={{ textAlign: 'center', mt: 2 }}>
+              {getAlertMessage()}
+            </Alert>
+          )}
+          <ColorButton type="submit" variant="contained" color="primary" sx={{ mt: 3, width: '100%', maxWidth: '250px' }} disabled={isSubmitting}>
+            Enviar
+          </ColorButton>          
+        </Box>
+      </Container>
     </>
-  )
+  );
 }
