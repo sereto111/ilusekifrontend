@@ -71,7 +71,7 @@ export function About() {
   const getAlertMessage = () => {
     if (formStatus === 'success') return 'Mensaje enviado con éxito';
     if (formStatus === 'error') return 'Error al enviar el mensaje. Inténtalo de nuevo más tarde.';
-    return '';
+    return 'Inténtalo de nuevo más tarde.';
   };
 
   return (
