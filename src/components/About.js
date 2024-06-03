@@ -5,7 +5,7 @@ import CachedIcon from '@mui/icons-material/Cached';
 import Spline from '@splinetool/react-spline';
 import { styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
-import { Box, Button, TextField, Typography, Container, Alert } from '@mui/material';
+import { Box, Button, TextField, Container, Alert } from '@mui/material';
 
 export function About() {
   const apiUrl = process.env.REACT_APP_API_URL;
