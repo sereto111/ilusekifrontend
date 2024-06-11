@@ -38,10 +38,12 @@ export function About() {
       setSplinesLoaded(true);
     }, 100);
 
+
     // Capturar hora local
     const localTime = new Date();
-    setClientTime("Fecha y hora local: "+localTime.toLocaleString());
+    setClientTime("Fecha y hora local: " + localTime.toLocaleString());
 
+    /* Con axios
     // Comparar con hora del servidor
     const compareTime = async () => {
       try {
@@ -52,7 +54,34 @@ export function About() {
         setServerTime("Fecha y hora del servidor: "+new Date(response.data.serverTime).toLocaleString());
         setIsSameTime(response.data.isSameTime);
       } catch (error) {
-        console.error('Error comparing time ', error);
+        console.error('Error comparando ', error);
+      }
+    };
+
+    compareTime();
+    */
+
+    // Con AJAX | API Fetch
+    // Comparar con hora del servidor
+    const compareTime = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/time/compare-time`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ clientTime: localTime.toISOString() })
+        });
+
+        if (!response.ok) {
+          throw new Error('Error en la petición');
+        }
+
+        const data = await response.json();
+        setServerTime("Fecha y hora del servidor: " + new Date(data.serverTime).toLocaleString());
+        setIsSameTime(data.isSameTime);
+      } catch (error) {
+        console.error('Error comparando ', error);
       }
     };
 
