@@ -164,11 +164,11 @@ export function About() {
       </div>
 
       <p className='aboutTxt'>
-        &#x270F;&#xFE0F; Lorem ipsum dolor sit amet consectetur adipiscing elit, arcu fames lacus vitae augue dictum, venenatis cubilia leo platea pharetra varius.
+        &#x270F;&#xFE0F; Con esta web responsiva, podrás tener un perfil donde subir tus ilustraciones, descubrir otros ilustradores y dar me gusta a sus ilustraciones. Además, también dispondrás de una sección de 'Guardados' para poder ver tus ilustraciones favoritas facilmente.
         <br /><br />
-        &#x1F58C;&#xFE0F; Lorem ipsum dolor sit amet consectetur adipiscing elit per nulla sagittis, pretium aliquam vulputate convallis tempor tellus cubilia accumsan ligula.
+        &#x1F58C;&#xFE0F; El sitio tiene funciones como buscador de perfiles, cambio de contraseña, modo oscuro y claro y formulario de contacto, para enviar un mensaje al encargado del sitio web.
         <br /><br />
-        &#x1F58D;&#xFE0F; Lorem ipsum dolor sit amet consectetur adipiscing elit ornare aliquam quis, quam pharetra metus dictum sagittis nisl torquent potenti habitant.
+        &#x1F58D;&#xFE0F; Puedes acceder como invitado (sin sesión iniciada), con este perfil podrás visualizar las ilustraciones y los perfiles de los ilustradores pero no dispondrás de un perfil al que subir tus ilustraciones y no podrás usar la lista de 'Guardados'.
         <br /><br />
         {clientTime}
         <br />
