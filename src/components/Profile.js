@@ -471,7 +471,8 @@ export function Profile() {
                                                 </Button>
                                                 {/* FIN boton me gusta */}
 
-                                            </div> </>
+                                            </div>
+                                        </>
                                     )}
                                 </div>
 
