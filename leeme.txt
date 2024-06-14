@@ -34,3 +34,20 @@ Link Backend desplegado (al que se hacen las peticiones):
 
 Link Backend GitHub:
     https://github.com/sereto111/ilusekibackend/tree/main
+
+En el package.json se pueden ver las dependecias:
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.19.2",
+    "express-fileupload": "^1.5.0",
+    "express-validator": "^6.15.0",
+    "fs-extra": "^11.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^8.2.4",
+    "nodemailer": "^6.9.13",
+    "nodemon": "^2.0.21",
+    "uuid": "^9.0.1"
+
+Para instalarlas habría que ejecutar el comando 'npm install'
