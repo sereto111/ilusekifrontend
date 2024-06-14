@@ -1,5 +1,6 @@
 # Información
-Link Frontend desplegado:
+Link Frontend desplegado (puede tardar en cargar las imágenes, ya que el servidor del Backend,\
+al estar desplegado de manera gratuita, se apaga al llevar un rato sin tener peticiones, tardará unos minutos en encender):
 [https://iluseki.netlify.app](https://iluseki.netlify.app)
 
 Link Frontend GitHub:
