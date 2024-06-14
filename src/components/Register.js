@@ -51,11 +51,9 @@ export function Register() {
       setShowAlertSuccess(true);
       await delay(1500); // Espera de 1.5 segundos
       goInicio();
-      //TODO: Quitar
       setShowAlertSuccess(false);
     } catch (error) {
       //Primer caso: usuario existente | Segundo caso: email existente
-      //TODO: Añadir mensaje personalizado para el error 500 y cambiar condición
       if (error.response.data.mensaje === "usuario ya existe en la BD" || error.response.status === 500) {
         setShowAlertError400(true);
         await delay(5000); // Espera de 5 segundos

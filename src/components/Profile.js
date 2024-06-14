@@ -86,7 +86,6 @@ export function Profile() {
                 );
                 setIlustraciones(ilustracionesUser);
             } catch (error) {
-                //TODO: Quitar console
                 console.error('Error al obtener las ilustraciones:', error);
             }
         };
@@ -263,7 +262,6 @@ export function Profile() {
                 handleCloseDialog();
                 window.location.reload();
             } catch (error) {
-                //TODO quitar console
                 console.error('Error al eliminar la ilustración:', error);
             }
         }
@@ -296,7 +294,6 @@ export function Profile() {
                             </Fab>
                         </>
                     )}
-                    {/* TODO: Ver si hacer más ancho (menos separación a los lados) */}
                     <h1>Perfil de {user}</h1>
                     <Box display="flex" justifyContent="center">
                         <List sx={{ display: 'flex', flexDirection: 'row' }}>
@@ -332,7 +329,6 @@ export function Profile() {
                                         />
                                     </ListItem>
 
-                                    {/* TODO: Configurar backend para correo de Cambiar contraseña */}
                                     <ListItem>
                                         <ListItemIcon sx={{ color: '#c2185b' }}>
                                             <LockTwoToneIcon />

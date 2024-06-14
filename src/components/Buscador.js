@@ -15,7 +15,6 @@ import { TextField, Autocomplete } from '@mui/material';
 import { obtenerUserDescifrado } from './Header';
 import "../App.css";
 
-/* TODO: Añadir me gusta a Profile y aquí */
 export function Buscador() {
     const apiUrl = process.env.REACT_APP_API_URL;
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -182,7 +181,6 @@ export function Buscador() {
                 handleCloseDialog();
                 window.location.reload();
             } catch (error) {
-                //TODO quitar console
                 console.error('Error al eliminar la ilustración:', error);
             }
         }
@@ -190,8 +188,6 @@ export function Buscador() {
 
     return (
         <div>
-            {/* TODO: Ver si cambiar diseño del TextField */}
-            {/* TODO: Ver si al principio no muestro nombre hasta que no introduzca letras */}
             {/* Campo de búsqueda con autocompletado */}
             <Autocomplete
                 options={users}
@@ -333,7 +329,6 @@ export function Buscador() {
                         <p>¿Estás seguro de que deseas eliminar esta ilustración?</p>
                     </DialogContent>
                     <DialogActions className='dialog'>
-                        {/* TODO: Ver si cambiar colores a los botones */}
                         <Button onClick={handleCloseDialog} variant="contained"
                             sx={{
                                 backgroundColor: grey[700], // Color de fondo personalizado

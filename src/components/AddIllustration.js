@@ -176,18 +176,7 @@ export function AddIllustration() {
                           borderBottomColor: '#C2185B',
                         }
                       }}
-                />
-                {/* TODO: Quitar si no se pone el TextField
-                <TextField
-                    className='register'
-                    required
-                    id="outlined-required"
-                    label="Subido por:"
-                    variant="filled"
-                    defaultValue={usuario}
-                    disabled
-                /> 
-                */}
+                />                
                 <Box display="flex" justifyContent="center">
                     <input
                         type="file"

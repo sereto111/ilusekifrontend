@@ -149,7 +149,6 @@ export function InitialWindow() {
 
   // Renderizar el componente
   return (
-    /* TODO: Mirar si cambiar CSS para centrarlos o posicionarlos mejor */
     <div className="profile-container">
       <h1>Descubre ilustradores</h1>
       <div className="home-container">

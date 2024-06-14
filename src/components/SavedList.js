@@ -128,30 +128,6 @@ export function SavedList() {
         }
     };
 
-    /* const handleOpenDialog = (ilustracion) => {
-        setSelectedIlustracion(ilustracion);
-        setDialogOpen(true);
-    };
-
-    const handleCloseDialog = () => {
-        setDialogOpen(false);
-        setSelectedIlustracion(null);
-    }; */
-
-    //TODO: Cambiar al borrado de Guardados
-    /*const handleConfirmDelete = async () => {
-        if (selectedIlustracion) {
-            try {
-                await axios.delete(`${apiUrl}/api/ilustration/eliminarIlustracion/${selectedIlustracion.nombre}`);
-                handleCloseDialog();
-                window.location.reload();
-            } catch (error) {
-                //TODO quitar console
-                console.error('Error al eliminar la ilustración:', error);
-            }
-        }
-    };*/
-
     const handleOpenDialog = (ilustracion) => {
         setSelectedIlustracion(ilustracion);
         setDialogOpen(true);
@@ -207,7 +183,6 @@ export function SavedList() {
             {/* Comprobar si hay usuario logueado */}
             {user ? (
                 <>
-                    {/* TODO: Añadir botón me gusta y guardados */}
                     <div className="profile-container">
                         <h1>Tus guardados | {user}</h1>
                         <div className="profile-grid-container">
